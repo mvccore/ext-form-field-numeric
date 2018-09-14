@@ -66,7 +66,7 @@ $schoolAgeFromTo = new \MvcCore\Ext\Forms\Fields\Range([
 	'min'			=> 0,
 	'max'			=> 130,
 	'step'			=> 1,
-	'validators'	=> ['Range'],
+	'validators'		=> ['Range'],
 ]);
 ...
 $form->AddFields($yourAge, $schoolAgeFromTo);
