@@ -50,7 +50,7 @@ composer require mvccore/ext-form-field-numeric
 ## Basic Example
 
 ```php
-$form new \MvcCore\Ext\Form();
+$form = (new \MvcCore\Ext\Form)->SetId('demo');
 ...
 $yourAge = new \MvcCore\Ext\Forms\Fields\Number();
 $yourAge
