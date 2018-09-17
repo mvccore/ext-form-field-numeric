@@ -21,9 +21,9 @@ namespace MvcCore\Ext\Forms\Fields;
  *				   return parsed `float` or `NULL` or for `multiple`
  *				   field it always return array of `float`s or empty array.
  */
-class Range 
-	extends		\MvcCore\Ext\Forms\Fields\Number
-	implements	\MvcCore\Ext\Forms\Fields\IMultiple
+class		Range 
+extends		\MvcCore\Ext\Forms\Fields\Number
+implements	\MvcCore\Ext\Forms\Fields\IMultiple
 {
 	use \MvcCore\Ext\Forms\Field\Props\Multiple;
 
@@ -114,6 +114,17 @@ class Range
 	public function & SetValue ($value) {
 		$this->value = $value;
 		return $this;
+	}
+
+	/**
+	 * Return field specific data for validator.
+	 * @param array $fieldPropsDefaultValidValues 
+	 * @return array
+	 */
+	public function & GetValidatorData ($fieldPropsDefaultValidValues = []) {
+		$parentResult = parent::GetValidatorData($fieldPropsDefaultValidValues);
+		$parentResult['multiple'] = $this->multiple;
+		return $parentResult;
 	}
 
 	/**

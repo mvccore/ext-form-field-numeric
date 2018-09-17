@@ -48,7 +48,7 @@ interface IMinMaxStepNumbers
 	/**
 	 * Set maximum value for `Number` field(s) in `float` or in `integer`.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-max
-	 * @param float|NULL $max
+	 * @param float|int|NULL $max
 	 * @return \MvcCore\Ext\Forms\IField
 	 */
 	public function & SetMax ($max);

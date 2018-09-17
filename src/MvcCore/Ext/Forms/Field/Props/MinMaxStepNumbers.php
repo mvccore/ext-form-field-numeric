@@ -59,7 +59,7 @@ trait MinMaxStepNumbers
 	 * @return \MvcCore\Ext\Forms\Field|\MvcCore\Ext\Forms\IField
 	 */
 	public function & SetMin ($min) {
-		$this->min = floatval($min);
+		$this->min = $min === NULL ? NULL : floatval($min);
 		return $this;
 	}
 
@@ -75,11 +75,11 @@ trait MinMaxStepNumbers
 	/**
 	 * Set maximum value for `Number` field(s) in `float` or in `integer`.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-max
-	 * @param float|NULL $max
+	 * @param float|int|NULL $max
 	 * @return \MvcCore\Ext\Forms\Field|\MvcCore\Ext\Forms\IField
 	 */
 	public function & SetMax ($max) {
-		$this->max = floatval($max);
+		$this->max = $max === NULL ? NULL : floatval($max);
 		return $this;
 	}
 
@@ -99,7 +99,7 @@ trait MinMaxStepNumbers
 	 * @return \MvcCore\Ext\Forms\Field|\MvcCore\Ext\Forms\IField
 	 */
 	public function & SetStep ($step) {
-		$this->step = floatval($step);
+		$this->step = $step === NULL ? NULL : floatval($step);
 		return $this;
 	}
 }

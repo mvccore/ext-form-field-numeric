@@ -23,6 +23,14 @@ class Range extends \MvcCore\Ext\Forms\Validators\Number
 	use \MvcCore\Ext\Forms\Field\Props\Multiple;
 
 	/**
+	 * Field specific values (camel case) and their validator default values.
+	 * @var array
+	 */
+	protected static $fieldSpecificProperties = [
+		'multiple'	=> NULL,
+	];
+
+	/**
 	 * Set up field instance, where is validated value by this 
 	 * validator durring submit before every `Validate()` method call.
 	 * This method is also called once, when validator instance is separately 
@@ -31,23 +39,11 @@ class Range extends \MvcCore\Ext\Forms\Validators\Number
 	 * @return \MvcCore\Ext\Forms\Validator|\MvcCore\Ext\Forms\IValidator
 	 */
 	public function & SetField (\MvcCore\Ext\Forms\IField & $field) {
-		parent::SetField($field);
-		
-		if (!$field instanceof \MvcCore\Ext\Forms\Fields\IMultiple) 
-			$this->throwNewInvalidArgumentException(
-				'If field has configured `Range` validator, it has to implement '
-				.'interface `\\MvcCore\\Ext\\Forms\\Fields\\IMultiple`.'
-			);
-
-		$fieldMultiple = $field->GetMultiple();
-		if ($fieldMultiple !== NULL) {
-			// if validator is added as string - get multiple property from field:
-			$this->multiple = $fieldMultiple;
-		} else if ($this->multiple !== NULL && $fieldMultiple === NULL) {
-			// if this validator is added into field as instance - check field if it has multiple attribute defined:
-			$field->SetMultiple($this->multiple);
-		}
-
+		$this->field = & $field;
+		$this->setUpFieldProps(array_merge(
+			self::$fieldSpecificProperties,
+			parent::$fieldSpecificProperties
+		));
 		return $this;
 	}
 		

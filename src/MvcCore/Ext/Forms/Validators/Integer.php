@@ -48,7 +48,7 @@ class Integer extends \MvcCore\Ext\Forms\Validators\Number
 			);
 			return NULL;
 		} else {
-			$resultInt = intval($result);
+			$resultInt = round($result);
 			if ($result !== floatval($resultInt)) {
 				$this->field->AddValidationError(
 					static::GetErrorMessage(self::ERROR_INT)

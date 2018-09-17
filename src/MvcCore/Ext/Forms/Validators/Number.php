@@ -47,47 +47,14 @@ class Number
 	];
 
 	/**
-	 * Set up field instance, where is validated value by this 
-	 * validator durring submit before every `Validate()` method call.
-	 * This method is also called once, when validator instance is separately 
-	 * added into already created field instance to process any field checking.
-	 * @param \MvcCore\Ext\Forms\Field|\MvcCore\Ext\Forms\IField $field 
-	 * @return \MvcCore\Ext\Forms\Validator|\MvcCore\Ext\Forms\IValidator
+	 * Field specific values (camel case) and their validator default values.
+	 * @var array
 	 */
-	public function & SetField (\MvcCore\Ext\Forms\IField & $field) {
-		parent::SetField($field);
-		
-		if (!$field instanceof \MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers)
-			$this->throwNewInvalidArgumentException(
-				"Field `".$field->GetName()."` doesn't implement interface `\\MvcCore\\Ext\\Forms\\Fields\\IMinMaxStepNumbers`."
-			);
-		
-		if (!$field instanceof \MvcCore\Ext\Forms\Fields\INumber)
-			$this->throwNewInvalidArgumentException(
-				"Field `".$field->GetName()."` doesn't implement interface `\\MvcCore\\Ext\\Forms\\Fields\\INumber`."
-			);
-
-		$fieldMin = $field->GetMin();
-		if ($fieldMin !== NULL) {
-			$this->min = $fieldMin;
-		} else if ($this->min !== NULL && $fieldMin === NULL) {
-			$field->SetMin($this->min);
-		}
-		$fieldMax = $field->GetMax();
-		if ($fieldMax !== NULL) {
-			$this->max = $fieldMax;
-		} else if ($this->max !== NULL && $fieldMax === NULL) {
-			$field->SetMax($this->max);
-		}
-		$fieldStep = $field->GetStep();
-		if ($fieldStep !== NULL) {
-			$this->step = $fieldStep;
-		} else if ($this->step !== NULL && $fieldStep === NULL) {
-			$field->SetStep($this->step);
-		}
-
-		return $this;
-	}
+	protected static $fieldSpecificProperties = [
+		'min'	=> NULL, 
+		'max'	=> NULL, 
+		'step'	=> NULL,
+	];
 	
 	/**
 	 * Validate raw user input. Parse float value if possible by `Intl` extension 
@@ -98,7 +65,10 @@ class Number
 	public function Validate ($rawSubmittedValue) {
 		$rawSubmittedValue = (string) $rawSubmittedValue;
 		if (mb_strlen($rawSubmittedValue) === 0) return NULL;
+
+		// TODO: nasměrovat na statický parser
 		$result = $this->field->ParseFloat($rawSubmittedValue);
+
 		if ($result === NULL) {
 			$this->field->AddValidationError(
 				static::GetErrorMessage(static::ERROR_NUMBER)
