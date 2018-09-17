@@ -31,13 +31,13 @@ class Integer extends \MvcCore\Ext\Forms\Validators\Number
 	 * @var array
 	 */
 	protected static $errorMessages = [
-		self::ERROR_INT	=> "Field `{0}` requires a valid integer.",
+		self::ERROR_INT	=> "Field `{0}` requires a valid integer (from `{1}` to `{2}` incl.).",
 	];
 
 	/**
 	 * Validate raw user input. Parse integer value if possible by `Intl` extension 
 	 * or try to determinate floating point automaticly ant then parse to int and return `int` or `NULL`.
-	 * @param string|array			$submitValue Raw user input.
+	 * @param string|array $submitValue Raw user input.
 	 * @return int|NULL	Safe submitted value or `NULL` if not possible to return safe value.
 	 */
 	public function Validate ($rawSubmittedValue) {
@@ -48,10 +48,12 @@ class Integer extends \MvcCore\Ext\Forms\Validators\Number
 			);
 			return NULL;
 		} else {
-			$resultInt = round($result);
+			$resultInt = intval(round($result));
 			if ($result !== floatval($resultInt)) {
+				$min = $this->min === NULL ? -PHP_INT_MAX : $this->min;
+				$max = $this->max === NULL ? PHP_INT_MAX : $this->max;
 				$this->field->AddValidationError(
-					static::GetErrorMessage(self::ERROR_INT)
+					static::GetErrorMessage(self::ERROR_INT, [$min, $max])
 				);
 				return NULL;
 			} else {

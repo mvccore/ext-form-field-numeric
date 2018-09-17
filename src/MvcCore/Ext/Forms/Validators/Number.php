@@ -66,8 +66,7 @@ class Number
 		$rawSubmittedValue = (string) $rawSubmittedValue;
 		if (mb_strlen($rawSubmittedValue) === 0) return NULL;
 
-		// TODO: nasměrovat na statický parser
-		$result = $this->field->ParseFloat($rawSubmittedValue);
+		$result = $this->parseFloat($rawSubmittedValue);
 
 		if ($result === NULL) {
 			$this->field->AddValidationError(
@@ -107,4 +106,27 @@ class Number
 		return $result;
 	}
 
+	/**
+	 * Parse raw user input by automatic floating point number detection.
+	 * @param string $rawSubmittedValue 
+	 * @return Float|NULL
+	 */
+	protected function parseFloat ($rawSubmittedValue) {
+		$extToolsLocalesFloatParserClass = '\\MvcCore\\Ext\\Tools\\Locales\\FloatParser';
+		if (!class_exists($extToolsLocalesFloatParserClass)) {
+			$this->field->AddValidationError(
+				"MvcCore extension library to parse user input into number "
+				. "is not installed (`mvccore/ext-tool-locale-floatparser`)."
+			);
+			return NULL;
+		}
+		$parser = $extToolsLocalesFloatParserClass::CreateInstance()
+			->SetPreferIntlParsing(FALSE);
+		if ($formLang = $this->form->GetLang()) $parser->SetLang($formLang);
+		if ($formLocale = $this->form->GetLocale()) $parser->SetLocale($formLocale);
+
+		$result = $parser->Parse($rawSubmittedValue);
+
+		return $result;
+	}
 }

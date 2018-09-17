@@ -31,7 +31,7 @@ class Float extends \MvcCore\Ext\Forms\Validators\Number
 	 * @var array
 	 */
 	protected static $errorMessages = [
-		self::ERROR_FLOAT	=> "Field `{0}` requires a valid float number.",
+		self::ERROR_FLOAT	=> "Field `{0}` requires a valid float number (from `{1}` to `{2}`).",
 	];
 
 	/**
@@ -42,10 +42,17 @@ class Float extends \MvcCore\Ext\Forms\Validators\Number
 	 */
 	public function Validate ($rawSubmittedValue) {
 		$result = $this->parseFloat((string)$rawSubmittedValue);
-		if ($result === NULL) 
+		if ($result === NULL) {
+			$min = $this->min === NULL 
+				? (defined('PHP_FLOAT_MIN ') ? PHP_FLOAT_MIN : '-1.8e308')
+				: (string) $this->min;
+			$max = $this->max === NULL 
+				? (defined('PHP_FLOAT_MAX ') ? PHP_FLOAT_MAX : '1.8e308')
+				: (string) $this->max;
 			$this->field->AddValidationError(
-				static::GetErrorMessage(self::ERROR_FLOAT)
+				static::GetErrorMessage(self::ERROR_FLOAT, [$min, $max])
 			);
+		}
 		return $result;
 	}
 }

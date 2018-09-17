@@ -172,7 +172,7 @@ implements	\MvcCore\Ext\Forms\Fields\IMultiple
 		$valueStr = $this->multiple && gettype($this->value) == 'array' 
 			? implode(',', (array) $this->value) 
 			: (string) $this->value;
-		$valueStr = htmlspecialchars($valueStr, ENT_QUOTES);
+		$valueStr = htmlspecialchars_decode(htmlspecialchars($valueStr, ENT_QUOTES), ENT_QUOTES);
 		$formViewClass = $this->form->GetViewClass();
 		$result = $formViewClass::Format(static::$templates->control, [
 			'id'		=> $this->id,
