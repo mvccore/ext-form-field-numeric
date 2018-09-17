@@ -18,7 +18,7 @@ namespace MvcCore\Ext\Forms\Validators;
  *				   `Intl` extension or try to determinate floating point 
  *				   automaticly ant then parse to int and return `int` or `NULL`.
  */
-class Integer extends \MvcCore\Ext\Forms\Validators\Number
+class IntNumber extends \MvcCore\Ext\Forms\Validators\Number
 {
 	/**
 	 * Error message index(es).
