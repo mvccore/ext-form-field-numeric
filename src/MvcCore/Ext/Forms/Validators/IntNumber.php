@@ -41,24 +41,28 @@ class IntNumber extends \MvcCore\Ext\Forms\Validators\Number
 	 * @return int|NULL	Safe submitted value or `NULL` if not possible to return safe value.
 	 */
 	public function Validate ($rawSubmittedValue) {
-		$result = $this->parseFloat((string)$rawSubmittedValue);
-		if ($result === NULL) {
-			$this->field->AddValidationError(
-				static::GetErrorMessage(self::ERROR_INT)
-			);
-			return NULL;
-		} else {
-			$resultInt = intval(round($result));
-			if ($result !== floatval($resultInt)) {
-				$min = $this->min === NULL ? -PHP_INT_MAX : $this->min;
-				$max = $this->max === NULL ? PHP_INT_MAX : $this->max;
+		$rawSubmittedValue = trim((string) $rawSubmittedValue);
+		if (mb_strlen($rawSubmittedValue) > 0) {
+			$result = $this->parseFloat($rawSubmittedValue);
+			if ($result === NULL) {
 				$this->field->AddValidationError(
-					static::GetErrorMessage(self::ERROR_INT, [$min, $max])
+					static::GetErrorMessage(self::ERROR_INT)
 				);
 				return NULL;
 			} else {
-				return $resultInt;
+				$resultInt = intval(round($result));
+				if ($result !== floatval($resultInt)) {
+					$min = $this->min === NULL ? -PHP_INT_MAX : $this->min;
+					$max = $this->max === NULL ? PHP_INT_MAX : $this->max;
+					$this->field->AddValidationError(
+						static::GetErrorMessage(self::ERROR_INT, [$min, $max])
+					);
+					return NULL;
+				} else {
+					return $resultInt;
+				}
 			}
 		}
+		return NULL;
 	}
 }

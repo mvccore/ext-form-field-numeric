@@ -41,18 +41,21 @@ class FloatNumber extends \MvcCore\Ext\Forms\Validators\Number
 	 * @return float|NULL	Safe submitted value or `NULL` if not possible to return safe value.
 	 */
 	public function Validate ($rawSubmittedValue) {
-		$result = $this->parseFloat((string)$rawSubmittedValue);
-		if ($result === NULL) {
-			$min = $this->min === NULL 
-				? (defined('PHP_FLOAT_MIN ') ? PHP_FLOAT_MIN : '-1.8e308')
-				: (string) $this->min;
-			$max = $this->max === NULL 
-				? (defined('PHP_FLOAT_MAX ') ? PHP_FLOAT_MAX : '1.8e308')
-				: (string) $this->max;
-			$this->field->AddValidationError(
-				static::GetErrorMessage(self::ERROR_FLOAT, [$min, $max])
-			);
+		$rawSubmittedValue = trim((string) $rawSubmittedValue);
+		if (mb_strlen($rawSubmittedValue) > 0) {
+			$result = $this->parseFloat($rawSubmittedValue);
+			if ($result === NULL) {
+				$min = $this->min === NULL 
+					? (defined('PHP_FLOAT_MIN ') ? PHP_FLOAT_MIN : '-1.8e308')
+					: (string) $this->min;
+				$max = $this->max === NULL 
+					? (defined('PHP_FLOAT_MAX ') ? PHP_FLOAT_MAX : '1.8e308')
+					: (string) $this->max;
+				$this->field->AddValidationError(
+					static::GetErrorMessage(self::ERROR_FLOAT, [$min, $max])
+				);
+			}
 		}
-		return $result;
+		return NULL;
 	}
 }
