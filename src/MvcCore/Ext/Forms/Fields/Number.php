@@ -14,7 +14,7 @@
 namespace MvcCore\Ext\Forms\Fields;
 
 /**
- * Responsibility: init, predispatch and render `<input>` HTML element 
+ * Responsibility: init, pre-dispatch and render `<input>` HTML element 
  *				   with types `number` and type `range` in extended class. 
  *				   `Number` field and it's extended fields have their own 
  *				   validator(s) to parse and check submitted value by

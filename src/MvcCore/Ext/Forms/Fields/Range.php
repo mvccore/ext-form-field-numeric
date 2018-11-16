@@ -14,7 +14,7 @@
 namespace MvcCore\Ext\Forms\Fields;
 
 /**
- * Responsibility: init, predispatch and render `<input>` HTML element 
+ * Responsibility: init, pre-dispatch and render `<input>` HTML element 
  *				   with type `range`. `Range` field has it's own 
  *				   validator(s) to parse and check submitted value by
  *				   min/max/step/pattern. This field always 
