@@ -46,7 +46,7 @@ implements	\MvcCore\Ext\Forms\Fields\IVisibleField,
 	/**
 	 * Validators: 
 	 * - `Number` - to parse and check raw user input. Parse float value if possible 
-	 *				by `Intl` extension or try to determinate floating point automaticly 
+	 *				by `Intl` extension or try to determinate floating point automatically 
 	 *				and return `float` or `NULL`.
 	 * @var string[]|\Closure[]
 	 */
@@ -122,7 +122,7 @@ implements	\MvcCore\Ext\Forms\Fields\IVisibleField,
 	 * - Set up field render mode if not defined.
 	 * - Translate label text if necessary.
 	 * - Set up `inputmode` field attribute if necessary.
-	 * - Set up tabindex if necessary.
+	 * - Set up tab-index if necessary.
 	 * @return void
 	 */
 	public function PreDispatch () {

@@ -16,7 +16,7 @@ namespace MvcCore\Ext\Forms\Validators;
 /**
  * Responsibility: Validate raw user input. Parse integer value if possible by 
  *				   `Intl` extension or try to determinate floating point 
- *				   automaticly ant then parse to int and return `int` or `NULL`.
+ *				   automatically ant then parse to int and return `int` or `NULL`.
  */
 class IntNumber extends \MvcCore\Ext\Forms\Validators\Number
 {
@@ -36,7 +36,7 @@ class IntNumber extends \MvcCore\Ext\Forms\Validators\Number
 
 	/**
 	 * Validate raw user input. Parse integer value if possible by `Intl` extension 
-	 * or try to determinate floating point automaticly ant then parse to int and return `int` or `NULL`.
+	 * or try to determinate floating point automatically and then parse to int and return `int` or `NULL`.
 	 * @param string|array $submitValue Raw user input.
 	 * @return int|NULL	Safe submitted value or `NULL` if not possible to return safe value.
 	 */

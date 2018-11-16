@@ -32,7 +32,7 @@ class Range extends \MvcCore\Ext\Forms\Validators\Number
 
 	/**
 	 * Set up field instance, where is validated value by this 
-	 * validator durring submit before every `Validate()` method call.
+	 * validator during submit before every `Validate()` method call.
 	 * This method is also called once, when validator instance is separately 
 	 * added into already created field instance to process any field checking.
 	 * @param \MvcCore\Ext\Forms\Field|\MvcCore\Ext\Forms\IField $field 

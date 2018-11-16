@@ -134,7 +134,7 @@ implements	\MvcCore\Ext\Forms\Fields\IMultiple
 	 * - Set up field render mode if not defined.
 	 * - Translate label text if necessary.
 	 * - Translate placeholder text if necessary.
-	 * - Set up tabindex if necessary.
+	 * - Set up tab-index if necessary.
 	 * - Add supporting javascript and css file.
 	 * @return void
 	 */
