@@ -37,8 +37,8 @@ class IntNumber extends \MvcCore\Ext\Forms\Validators\Number
 	/**
 	 * Validate raw user input. Parse integer value if possible by `Intl` extension 
 	 * or try to determinate floating point automatically and then parse to int and return `int` or `NULL`.
-	 * @param string|array $submitValue Raw user input.
-	 * @return int|NULL	Safe submitted value or `NULL` if not possible to return safe value.
+	 * @param string|array	$submitValue Raw user input.
+	 * @return int|NULL		Safe submitted value or `NULL` if not possible to return safe value.
 	 */
 	public function Validate ($rawSubmittedValue) {
 		$rawSubmittedValue = trim((string) $rawSubmittedValue);

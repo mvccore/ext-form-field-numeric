@@ -69,9 +69,10 @@ implements	\MvcCore\Ext\Forms\Fields\IVisibleField,
 	/**
 	 * Set numeric field value as `float`.
 	 * @param float|NULL $value 
-	 * @return \MvcCore\Ext\Forms\Validators\Number
+	 * @return \MvcCore\Ext\Forms\Validators\Number|\MvcCore\Ext\Forms\IField
 	 */
 	public function & SetValue ($value) {
+		/** @var $this \MvcCore\Ext\Forms\IField */
 		$this->value = $value;
 		return $this;
 	}
@@ -84,12 +85,13 @@ implements	\MvcCore\Ext\Forms\Fields\IVisibleField,
 	 * - Set up form and field id attribute by form id and field name.
 	 * - Set up required.
 	 * - Set up translate boolean property.
-	 * - Set up pattern validator uatomaticly if any `pattern` property defined.
+	 * - Set up pattern validator automatically if any `pattern` property defined.
 	 * @param \MvcCore\Ext\Form|\MvcCore\Ext\Forms\IForm $form
 	 * @throws \InvalidArgumentException
 	 * @return \MvcCore\Ext\Forms\Fields\Number|\MvcCore\Ext\Forms\IField
 	 */
 	public function & SetForm (\MvcCore\Ext\Forms\IForm & $form) {
+		/** @var $this \MvcCore\Ext\Forms\IField */
 		parent::SetForm($form);
 		$this->setFormPattern();
 		return $this;
@@ -150,7 +152,9 @@ implements	\MvcCore\Ext\Forms\Fields\IVisibleField,
 			$attrsStr .= (strlen($attrsStr) > 0 ? ' ' : '')
 				. 'form="' . $this->form->GetId() . '"';
 		$formViewClass = $this->form->GetViewClass();
-		$result = $formViewClass::Format(static::$templates->control, [
+		/** @var $templates \stdClass */
+		$templates = static::$templates;
+		$result = $formViewClass::Format($templates->control, [
 			'id'		=> $this->id,
 			'name'		=> $this->name,
 			'type'		=> $this->type,

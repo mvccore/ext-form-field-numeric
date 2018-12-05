@@ -48,7 +48,7 @@ implements	\MvcCore\Ext\Forms\Fields\IMultiple
 	 * `$field->jsSupportingFile` property to define path to your javascript file
 	 * relatively from configured `\MvcCore\Ext\Form::SetJsSupportFilesRootDir(...);`
 	 * value. Than you have to add supporting javascript file path into field form 
-	 * in `$field->PreDispatch();` method to render those files immediatelly after form
+	 * in `$field->PreDispatch();` method to render those files immediately after form
 	 * (once) or by any external custom assets renderer configured by:
 	 * `$form->SetJsSupportFilesRenderer(...);` method.
 	 * Or you can add your custom supporting javascript files into response by your 
@@ -65,7 +65,7 @@ implements	\MvcCore\Ext\Forms\Fields\IMultiple
 	 * define path to your javascript file relatively from configured 
 	 * `\MvcCore\Ext\Form::SetJsSupportFilesRootDir(...);` value. 
 	 * Than you have to add supporting javascript file path into field form 
-	 * in `$field->PreDispatch();` method to render those files immediatelly after form
+	 * in `$field->PreDispatch();` method to render those files immediately after form
 	 * (once) or by any external custom assets renderer configured by:
 	 * `$form->SetJsSupportFilesRenderer(...);` method.
 	 * Or you can add your custom supporting javascript files into response by your 
@@ -82,7 +82,7 @@ implements	\MvcCore\Ext\Forms\Fields\IMultiple
 	 * define path to your css file relatively from configured 
 	 * `\MvcCore\Ext\Form::SetCssSupportFilesRootDir(...);` value. 
 	 * Than you have to add supporting css file path into field form 
-	 * in `$field->PreDispatch();` method to render those files immediatelly after form
+	 * in `$field->PreDispatch();` method to render those files immediately after form
 	 * (once) or by any external custom assets renderer configured by:
 	 * `$form->SetCssSupportFilesRenderer(...);` method.
 	 * Or you can add your custom supporting css files into response by your 
@@ -109,9 +109,10 @@ implements	\MvcCore\Ext\Forms\Fields\IMultiple
 	 * attribute, set to this function `float`.
 	 * If you don't want any pre initialized value, set `NULL`.
 	 * @param array|float|NULL $value
-	 * @return \MvcCore\Ext\Forms\Fields\Select
+	 * @return \MvcCore\Ext\Forms\Fields\Select|\MvcCore\Ext\Forms\IField
 	 */
 	public function & SetValue ($value) {
+		/** @var $this \MvcCore\Ext\Forms\IField */
 		$this->value = $value;
 		return $this;
 	}
@@ -174,7 +175,9 @@ implements	\MvcCore\Ext\Forms\Fields\IMultiple
 			: (string) $this->value;
 		$valueStr = htmlspecialchars_decode(htmlspecialchars($valueStr, ENT_QUOTES), ENT_QUOTES);
 		$formViewClass = $this->form->GetViewClass();
-		$result = $formViewClass::Format(static::$templates->control, [
+		/** @var $templates \stdClass */
+		$templates = static::$templates;
+		$result = $formViewClass::Format($templates->control, [
 			'id'		=> $this->id,
 			'name'		=> $this->name . ($this->multiple ? '[]' : ''),
 			'type'		=> $this->type,

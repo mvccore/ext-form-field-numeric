@@ -59,6 +59,7 @@ trait MinMaxStepNumbers
 	 * @return \MvcCore\Ext\Forms\Field|\MvcCore\Ext\Forms\IField
 	 */
 	public function & SetMin ($min) {
+		/** @var $this \MvcCore\Ext\Forms\IField */
 		$this->min = $min === NULL ? NULL : floatval($min);
 		return $this;
 	}
@@ -79,6 +80,7 @@ trait MinMaxStepNumbers
 	 * @return \MvcCore\Ext\Forms\Field|\MvcCore\Ext\Forms\IField
 	 */
 	public function & SetMax ($max) {
+		/** @var $this \MvcCore\Ext\Forms\IField */
 		$this->max = $max === NULL ? NULL : floatval($max);
 		return $this;
 	}
@@ -99,6 +101,7 @@ trait MinMaxStepNumbers
 	 * @return \MvcCore\Ext\Forms\Field|\MvcCore\Ext\Forms\IField
 	 */
 	public function & SetStep ($step) {
+		/** @var $this \MvcCore\Ext\Forms\IField */
 		$this->step = $step === NULL ? NULL : floatval($step);
 		return $this;
 	}
