@@ -31,9 +31,9 @@
 		"homepage": "https://github.com/tomFlidr"
 	}],
 	"require": {
-		"php": ">=5.3.0",
-		"mvccore/mvccore": "^4.3.1",
-		"mvccore/ext-tool-locale-floatparser": "^4.3.1"
+		"php": ">=5.4.0",
+		"mvccore/mvccore": "dev-master",
+		"mvccore/ext-tool-locale-floatparser": "dev-master"
 	},
 	"suggest": {
 		"mvccore/ext-form-validator-special": "MvcCore form extension with special text and numeric validators."
@@ -41,5 +41,5 @@
 	"autoload": {
 		"classmap": ["src/"]
 	},
-	"minimum-stability": "stable"
+	"minimum-stability": "dev"
 }
