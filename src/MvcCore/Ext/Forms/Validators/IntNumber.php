@@ -42,27 +42,56 @@ class IntNumber extends \MvcCore\Ext\Forms\Validators\Number
 	 */
 	public function Validate ($rawSubmittedValue) {
 		$rawSubmittedValue = trim((string) $rawSubmittedValue);
-		if (mb_strlen($rawSubmittedValue) > 0) {
-			$result = $this->parseFloat($rawSubmittedValue);
-			if ($result === NULL) {
+		if (mb_strlen($rawSubmittedValue) === 0) return NULL;
+		$result = $this->parseFloat($rawSubmittedValue);
+		if ($result === NULL) {
+			$this->field->AddValidationError(
+				static::GetErrorMessage(self::ERROR_INT)
+			);
+			return NULL;
+		} else {
+			$resultInt = intval(round($result));
+			if (!$this->compareFloats($result, floatval($resultInt))) {
+				$min = $this->min === NULL ? -PHP_INT_MAX : $this->min;
+				$max = $this->max === NULL ? PHP_INT_MAX : $this->max;
 				$this->field->AddValidationError(
-					static::GetErrorMessage(self::ERROR_INT)
+					static::GetErrorMessage(self::ERROR_INT, [$min, $max])
 				);
 				return NULL;
 			} else {
-				$resultInt = intval(round($result));
-				if ($result !== floatval($resultInt)) {
-					$min = $this->min === NULL ? -PHP_INT_MAX : $this->min;
-					$max = $this->max === NULL ? PHP_INT_MAX : $this->max;
-					$this->field->AddValidationError(
-						static::GetErrorMessage(self::ERROR_INT, [$min, $max])
-					);
-					return NULL;
-				} else {
-					return $resultInt;
-				}
+				return $resultInt;
 			}
 		}
-		return NULL;
+	}
+
+	/**
+	 * Return `TRUE` if given floats are absolutelly equal.
+	 * @param float $a (required) Left operand
+	 * @param float $b (required) Right operand
+	 * @return bool
+	 */
+	protected function compareFloats ($a, $b) {
+		$aInt = intval($a);
+		$bInt = intval($b);
+
+		$aIntLen = strlen(strval($aInt));
+		$bIntLen = strlen(strval($bInt));
+
+		$aStr = strval($a);
+		$bStr = strval($b);
+		if ($aStr === '') $aStr = '0';
+		if ($bStr === '') $bStr = '0';
+
+		if (strpos($aStr, '.') === FALSE) $aStr .= '.0';
+		if (strpos($bStr, '.') === FALSE) $bStr .= '.0';
+
+		$aStrLen = strlen($aStr);
+		$bStrLen = strlen($bStr);
+
+		$aPreciseLen = $aStrLen - $aIntLen - 1;
+		$bPreciseLen = $bStrLen - $bIntLen - 1;
+		$maxPreciseLen = max($aPreciseLen, $bPreciseLen);
+
+		return bccomp($a, $b, $maxPreciseLen) === 0;
 	}
 }

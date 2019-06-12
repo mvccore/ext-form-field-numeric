@@ -60,8 +60,10 @@ class Range extends \MvcCore\Ext\Forms\Validators\Number
 				? $rawSubmittedValue 
 				: explode(',', (string) $rawSubmittedValue);
 			$result = [];
-			foreach ($rawSubmitValues as $rawSubmitValue) 
-				$result[] = parent::Validate($rawSubmitValue);
+			foreach ($rawSubmitValues as $rawSubmitValue) {
+				$resultItem = parent::Validate($rawSubmitValue);
+				if ($resultItem !== NULL) $result[] = $resultItem;
+			}
 			return $result;
 		} else {
 			return parent::Validate((string) $rawSubmittedValue);

@@ -42,20 +42,19 @@ class FloatNumber extends \MvcCore\Ext\Forms\Validators\Number
 	 */
 	public function Validate ($rawSubmittedValue) {
 		$rawSubmittedValue = trim((string) $rawSubmittedValue);
-		if (mb_strlen($rawSubmittedValue) > 0) {
-			$result = $this->parseFloat($rawSubmittedValue);
-			if ($result === NULL) {
-				$min = $this->min === NULL 
-					? (defined('PHP_FLOAT_MIN ') ? PHP_FLOAT_MIN : '-1.8e308')
-					: (string) $this->min;
-				$max = $this->max === NULL 
-					? (defined('PHP_FLOAT_MAX ') ? PHP_FLOAT_MAX : '1.8e308')
-					: (string) $this->max;
-				$this->field->AddValidationError(
-					static::GetErrorMessage(self::ERROR_FLOAT, [$min, $max])
-				);
-			}
+		if (mb_strlen($rawSubmittedValue) === 0) return NULL;
+		$result = $this->parseFloat($rawSubmittedValue);
+		if ($result === NULL) {
+			$min = $this->min === NULL 
+				? (defined('PHP_FLOAT_MIN ') ? PHP_FLOAT_MIN : '-1.8e308')
+				: (string) $this->min;
+			$max = $this->max === NULL 
+				? (defined('PHP_FLOAT_MAX ') ? PHP_FLOAT_MAX : '1.8e308')
+				: (string) $this->max;
+			$this->field->AddValidationError(
+				static::GetErrorMessage(self::ERROR_FLOAT, [$min, $max])
+			);
 		}
-		return NULL;
+		return $result;
 	}
 }
