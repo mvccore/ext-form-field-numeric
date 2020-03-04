@@ -71,7 +71,7 @@ implements	\MvcCore\Ext\Forms\Fields\IVisibleField,
 	 * @param float|NULL $value 
 	 * @return \MvcCore\Ext\Forms\Validators\Number|\MvcCore\Ext\Forms\IField
 	 */
-	public function & SetValue ($value) {
+	public function SetValue ($value) {
 		/** @var $this \MvcCore\Ext\Forms\IField */
 		$this->value = $value;
 		return $this;
@@ -90,7 +90,7 @@ implements	\MvcCore\Ext\Forms\Fields\IVisibleField,
 	 * @throws \InvalidArgumentException
 	 * @return \MvcCore\Ext\Forms\Fields\Number|\MvcCore\Ext\Forms\IField
 	 */
-	public function & SetForm (\MvcCore\Ext\Forms\IForm & $form) {
+	public function SetForm (\MvcCore\Ext\Forms\IForm $form) {
 		/** @var $this \MvcCore\Ext\Forms\IField */
 		parent::SetForm($form);
 		$this->setFormPattern();

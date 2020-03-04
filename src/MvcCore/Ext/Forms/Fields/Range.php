@@ -111,7 +111,7 @@ implements	\MvcCore\Ext\Forms\Fields\IMultiple
 	 * @param array|float|NULL $value
 	 * @return \MvcCore\Ext\Forms\Fields\Select|\MvcCore\Ext\Forms\IField
 	 */
-	public function & SetValue ($value) {
+	public function SetValue ($value) {
 		/** @var $this \MvcCore\Ext\Forms\IField */
 		$this->value = $value;
 		return $this;

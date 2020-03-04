@@ -38,8 +38,8 @@ class Range extends \MvcCore\Ext\Forms\Validators\Number
 	 * @param \MvcCore\Ext\Forms\Field|\MvcCore\Ext\Forms\IField $field 
 	 * @return \MvcCore\Ext\Forms\Validator|\MvcCore\Ext\Forms\IValidator
 	 */
-	public function & SetField (\MvcCore\Ext\Forms\IField & $field) {
-		$this->field = & $field;
+	public function SetField (\MvcCore\Ext\Forms\IField $field) {
+		$this->field = $field;
 		$this->setUpFieldProps(array_merge(
 			self::$fieldSpecificProperties,
 			parent::$fieldSpecificProperties

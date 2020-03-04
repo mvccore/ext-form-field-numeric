@@ -36,7 +36,7 @@ interface IMinMaxStepNumbers
 	 * @param float|int|NULL $min
 	 * @return \MvcCore\Ext\Forms\IField
 	 */
-	public function & SetMin ($min);
+	public function SetMin ($min);
 
 	/**
 	 * Get maximum value for `Number` field(s) in `float`.
@@ -51,7 +51,7 @@ interface IMinMaxStepNumbers
 	 * @param float|int|NULL $max
 	 * @return \MvcCore\Ext\Forms\IField
 	 */
-	public function & SetMax ($max);
+	public function SetMax ($max);
 
 	/**
 	 * Get step value for `Number` in `float`.
@@ -66,5 +66,5 @@ interface IMinMaxStepNumbers
 	 * @param float|int|NULL $step
 	 * @return \MvcCore\Ext\Forms\IField
 	 */
-	public function & SetStep ($step);
+	public function SetStep ($step);
 }
