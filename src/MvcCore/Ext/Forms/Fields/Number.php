@@ -129,6 +129,7 @@ implements	\MvcCore\Ext\Forms\Fields\IVisibleField,
 	 */
 	public function PreDispatch () {
 		parent::PreDispatch();
+		$this->preDispatchPlaceHolder();
 		$this->preDispatchInputMode();
 		$this->preDispatchTabIndex();
 	}
