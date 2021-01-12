@@ -73,7 +73,7 @@ implements	\MvcCore\Ext\Forms\Fields\IMultiple
 	 * `NULL` by default.
 	 * @var string
 	 */
-	protected $jsSupportingFile = \MvcCore\Ext\Forms\IForm::FORM_ASSETS_DIR_REPLACEMENT . '/fields/range.js';
+	protected $jsSupportingFile = \MvcCore\Ext\IForm::FORM_ASSETS_DIR_REPLACEMENT . '/fields/range.js';
 	
 	/**
 	 * Field supporting css file relative path.
@@ -90,7 +90,7 @@ implements	\MvcCore\Ext\Forms\Fields\IMultiple
 	 * `NULL` by default.
 	 * @var string
 	 */
-	protected $cssSupportingFile = \MvcCore\Ext\Forms\IForm::FORM_ASSETS_DIR_REPLACEMENT . '/fields/range.css';
+	protected $cssSupportingFile = \MvcCore\Ext\IForm::FORM_ASSETS_DIR_REPLACEMENT . '/fields/range.css';
 
 	/**
 	 * If range has multiple attribute, this function
