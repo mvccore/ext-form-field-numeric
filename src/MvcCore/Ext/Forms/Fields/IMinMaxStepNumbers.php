@@ -7,8 +7,8 @@
  * For the full copyright and license information, please view
  * the LICENSE.md file that are distributed with this source code.
  *
- * @copyright	Copyright (c) 2016 Tom Flídr (https://github.com/mvccore/mvccore)
- * @license		https://mvccore.github.io/docs/mvccore/4.0.0/LICENCE.md
+ * @copyright	Copyright (c) 2016 Tom Flidr (https://github.com/mvccore)
+ * @license		https://mvccore.github.io/docs/mvccore/5.0.0/LICENCE.md
  */
 
 namespace MvcCore\Ext\Forms\Fields;
@@ -21,8 +21,8 @@ namespace MvcCore\Ext\Forms\Fields;
  *    - `\MvcCore\Ext\Forms\Fields\Range`
  * - `\MvcCore\Ext\Forms\Validators\Number`
  */
-interface IMinMaxStepNumbers
-{
+interface IMinMaxStepNumbers {
+
 	/**
 	 * Get minimum value for `Number` field(s) in `float`.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-min
@@ -34,7 +34,7 @@ interface IMinMaxStepNumbers
 	 * Set minimum value for `Number` field(s) in `float` or in `integer`.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-min
 	 * @param float|int|NULL $min
-	 * @return \MvcCore\Ext\Forms\IField
+	 * @return \MvcCore\Ext\Forms\Field
 	 */
 	public function SetMin ($min);
 
@@ -49,7 +49,7 @@ interface IMinMaxStepNumbers
 	 * Set maximum value for `Number` field(s) in `float` or in `integer`.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-max
 	 * @param float|int|NULL $max
-	 * @return \MvcCore\Ext\Forms\IField
+	 * @return \MvcCore\Ext\Forms\Field
 	 */
 	public function SetMax ($max);
 
@@ -64,7 +64,7 @@ interface IMinMaxStepNumbers
 	 * Set step value for `Number` in `float` or in `integer`.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-step
 	 * @param float|int|NULL $step
-	 * @return \MvcCore\Ext\Forms\IField
+	 * @return \MvcCore\Ext\Forms\Field
 	 */
 	public function SetStep ($step);
 }

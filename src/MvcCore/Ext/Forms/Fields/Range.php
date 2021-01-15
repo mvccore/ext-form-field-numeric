@@ -7,8 +7,8 @@
  * For the full copyright and license information, please view
  * the LICENSE.md file that are distributed with this source code.
  *
- * @copyright	Copyright (c) 2016 Tom Flídr (https://github.com/mvccore/mvccore)
- * @license		https://mvccore.github.io/docs/mvccore/4.0.0/LICENCE.md
+ * @copyright	Copyright (c) 2016 Tom Flidr (https://github.com/mvccore)
+ * @license		https://mvccore.github.io/docs/mvccore/5.0.0/LICENCE.md
  */
 
 namespace MvcCore\Ext\Forms\Fields;
@@ -23,8 +23,8 @@ namespace MvcCore\Ext\Forms\Fields;
  */
 class		Range 
 extends		\MvcCore\Ext\Forms\Fields\Number
-implements	\MvcCore\Ext\Forms\Fields\IMultiple
-{
+implements	\MvcCore\Ext\Forms\Fields\IMultiple {
+
 	use \MvcCore\Ext\Forms\Field\Props\Multiple;
 
 	/**
@@ -109,10 +109,10 @@ implements	\MvcCore\Ext\Forms\Fields\IMultiple
 	 * attribute, set to this function `float`.
 	 * If you don't want any pre initialized value, set `NULL`.
 	 * @param array|float|NULL $value
-	 * @return \MvcCore\Ext\Forms\Fields\Select|\MvcCore\Ext\Forms\IField
+	 * @return \MvcCore\Ext\Forms\Fields\Select
 	 */
 	public function SetValue ($value) {
-		/** @var $this \MvcCore\Ext\Forms\IField */
+		/** @var $this \MvcCore\Ext\Forms\Field */
 		$this->value = $value;
 		return $this;
 	}

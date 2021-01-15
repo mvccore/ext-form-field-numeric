@@ -7,8 +7,8 @@
  * For the full copyright and license information, please view
  * the LICENSE.md file that are distributed with this source code.
  *
- * @copyright	Copyright (c) 2016 Tom Flídr (https://github.com/mvccore/mvccore)
- * @license		https://mvccore.github.io/docs/mvccore/4.0.0/LICENCE.md
+ * @copyright	Copyright (c) 2016 Tom Flidr (https://github.com/mvccore)
+ * @license		https://mvccore.github.io/docs/mvccore/5.0.0/LICENCE.md
  */
 
 namespace MvcCore\Ext\Forms\Field\Props;
@@ -20,8 +20,8 @@ namespace MvcCore\Ext\Forms\Field\Props;
  * Trait contains properties, getters and setters for 
  * protected properties `min`, `max` and `step`.
  */
-trait MinMaxStepNumbers
-{
+trait MinMaxStepNumbers {
+
 	/**
 	 * Minimum value for `Number` field(s) in `float` or in `integer`.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-min
@@ -56,10 +56,10 @@ trait MinMaxStepNumbers
 	 * Set minimum value for `Number` field(s) in `float` or in `integer`.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-min
 	 * @param float|int|NULL $min
-	 * @return \MvcCore\Ext\Forms\Field|\MvcCore\Ext\Forms\IField
+	 * @return \MvcCore\Ext\Forms\Field
 	 */
 	public function SetMin ($min) {
-		/** @var $this \MvcCore\Ext\Forms\IField */
+		/** @var $this \MvcCore\Ext\Forms\Field */
 		$this->min = $min === NULL ? NULL : floatval($min);
 		return $this;
 	}
@@ -77,10 +77,10 @@ trait MinMaxStepNumbers
 	 * Set maximum value for `Number` field(s) in `float` or in `integer`.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-max
 	 * @param float|int|NULL $max
-	 * @return \MvcCore\Ext\Forms\Field|\MvcCore\Ext\Forms\IField
+	 * @return \MvcCore\Ext\Forms\Field
 	 */
 	public function SetMax ($max) {
-		/** @var $this \MvcCore\Ext\Forms\IField */
+		/** @var $this \MvcCore\Ext\Forms\Field */
 		$this->max = $max === NULL ? NULL : floatval($max);
 		return $this;
 	}
@@ -98,10 +98,10 @@ trait MinMaxStepNumbers
 	 * Set step value for `Number` in `float` or in `integer`.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-step
 	 * @param float|int|NULL $step
-	 * @return \MvcCore\Ext\Forms\Field|\MvcCore\Ext\Forms\IField
+	 * @return \MvcCore\Ext\Forms\Field
 	 */
 	public function SetStep ($step) {
-		/** @var $this \MvcCore\Ext\Forms\IField */
+		/** @var $this \MvcCore\Ext\Forms\Field */
 		$this->step = $step === NULL ? NULL : floatval($step);
 		return $this;
 	}
