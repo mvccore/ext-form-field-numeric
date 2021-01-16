@@ -3,21 +3,21 @@
 	"type": "library",
 	"description": "MvcCore - Extension - Form - Field - Numeric - form field types - input:number and input:range.",
 	"keywords": [
-		"mvc", 
-		"mvccore", 
-		"framework", 
-		"extension", 
-		"plugin", 
-		"plug-in", 
-		"ext", 
-		"mvccore", 
-		"form", 
-		"forms", 
-		"webform", 
-		"html5", 
-		"input", 
-		"inputs", 
-		"number", 
+		"mvc",
+		"mvccore",
+		"framework",
+		"extension",
+		"plugin",
+		"plug-in",
+		"ext",
+		"mvccore",
+		"form",
+		"forms",
+		"webform",
+		"html5",
+		"input",
+		"inputs",
+		"number",
 		"float",
 		"integer",
 		"int",
@@ -32,14 +32,16 @@
 	}],
 	"require": {
 		"php": ">=5.4.0",
-		"mvccore/mvccore": "dev-master",
-		"mvccore/ext-tool-locale-floatparser": "dev-master"
+		"mvccore/mvccore": "^5.0",
+		"mvccore/ext-tool-locale-floatparser": "^5.0"
 	},
 	"suggest": {
 		"mvccore/ext-form-validator-special": "MvcCore form extension with special text and numeric validators."
 	},
 	"autoload": {
-		"classmap": ["src/"]
+		"classmap": [
+			"src/"
+		]
 	},
 	"minimum-stability": "dev"
 }
