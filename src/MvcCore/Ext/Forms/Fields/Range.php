@@ -21,6 +21,7 @@ namespace MvcCore\Ext\Forms\Fields;
  *				   return parsed `float` or `NULL` or for `multiple`
  *				   field it always return array of `float`s or empty array.
  */
+#[\Attribute(\Attribute::TARGET_PROPERTY)]
 class		Range 
 extends		\MvcCore\Ext\Forms\Fields\Number
 implements	\MvcCore\Ext\Forms\Fields\IMultiple {

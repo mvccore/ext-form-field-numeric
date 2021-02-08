@@ -18,6 +18,7 @@ namespace MvcCore\Ext\Forms\Validators;
  *				   `Intl` extension or try to determinate floating point 
  *				   automatically ant then parse to int and return `int` or `NULL`.
  */
+#[\Attribute(\Attribute::TARGET_PROPERTY)]
 class IntNumber extends \MvcCore\Ext\Forms\Validators\Number {
 
 	/**

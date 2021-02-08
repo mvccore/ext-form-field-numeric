@@ -18,6 +18,7 @@ namespace MvcCore\Ext\Forms\Validators;
  *				   values by locale conventions and check minimum, maximum and 
  *				   step if necessary.
  */
+#[\Attribute(\Attribute::TARGET_PROPERTY)]
 class Range extends \MvcCore\Ext\Forms\Validators\Number {
 
 	use \MvcCore\Ext\Forms\Field\Props\Multiple;

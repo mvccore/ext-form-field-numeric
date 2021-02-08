@@ -18,6 +18,7 @@ namespace MvcCore\Ext\Forms\Validators;
  *				   `Intl` extension or try to determinate floating point 
  *				   automatically and return `float` or `NULL`.
  */
+#[\Attribute(\Attribute::TARGET_PROPERTY)]
 class FloatNumber extends \MvcCore\Ext\Forms\Validators\Number {
 
 	/**

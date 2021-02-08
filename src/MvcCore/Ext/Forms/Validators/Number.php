@@ -18,6 +18,7 @@ namespace MvcCore\Ext\Forms\Validators;
  *				   `Intl` extension or try to determinate floating point 
  *				   automatically and return `float` or `NULL`.
  */
+#[\Attribute(\Attribute::TARGET_PROPERTY)]
 class		Number 
 extends		\MvcCore\Ext\Forms\Validator
 implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
