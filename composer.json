@@ -32,7 +32,8 @@
 	}],
 	"require": {
 		"php": ">=5.4.0",
-		"mvccore/mvccore": "^5.0",
+		"mvccore/mvccore": "^5.0.4",
+		"mvccore/ext-form": "^5.1.2",
 		"mvccore/ext-tool-locale-floatparser": "^5.0"
 	},
 	"suggest": {

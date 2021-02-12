@@ -55,7 +55,7 @@ trait MinMaxStepNumbers {
 	/**
 	 * Set minimum value for `Number` field(s) in `float` or in `integer`.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-min
-	 * @param float|int|NULL $min
+	 * @param  float|int|NULL $min
 	 * @return \MvcCore\Ext\Forms\Field
 	 */
 	public function SetMin ($min) {
@@ -76,7 +76,7 @@ trait MinMaxStepNumbers {
 	/**
 	 * Set maximum value for `Number` field(s) in `float` or in `integer`.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-max
-	 * @param float|int|NULL $max
+	 * @param  float|int|NULL $max
 	 * @return \MvcCore\Ext\Forms\Field
 	 */
 	public function SetMax ($max) {
@@ -97,7 +97,7 @@ trait MinMaxStepNumbers {
 	/**
 	 * Set step value for `Number` in `float` or in `integer`.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-step
-	 * @param float|int|NULL $step
+	 * @param  float|int|NULL $step
 	 * @return \MvcCore\Ext\Forms\Field
 	 */
 	public function SetStep ($step) {

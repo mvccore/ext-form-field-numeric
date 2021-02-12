@@ -15,11 +15,11 @@ namespace MvcCore\Ext\Forms\Fields;
 
 /**
  * Responsibility: init, pre-dispatch and render `<input>` HTML element 
- *				   with types `number` and type `range` in extended class. 
- *				   `Number` field and it's extended fields have their own 
- *				   validator(s) to parse and check submitted value by
- *				   min/max/step/pattern. This field always 
- *				   return parsed `float` or `NULL`.
+ *                 with types `number` and type `range` in extended class. 
+ *                 `Number` field and it's extended fields have their own 
+ *                 validator(s) to parse and check submitted value by
+ *                 min/max/step/pattern. This field always 
+ *                 return parsed `float` or `NULL`.
  */
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
 class		Number 
@@ -43,7 +43,7 @@ implements	\MvcCore\Ext\Forms\Fields\IVisibleField,
 	 * Comparison by PHP function version_compare();
 	 * @see http://php.net/manual/en/function.version-compare.php
 	 */
-	const VERSION = '5.0.1';
+	const VERSION = '5.1.2';
 
 	/**
 	 * Possible values: `number` and `range` in extended class.
@@ -54,9 +54,9 @@ implements	\MvcCore\Ext\Forms\Fields\IVisibleField,
 	/**
 	 * Validators: 
 	 * - `Number` - to parse and check raw user input. Parse float value if possible 
-	 *				by `Intl` extension or try to determinate floating point automatically 
-	 *				and return `float` or `NULL`.
-	 * @var string[]|\Closure[]
+	 *              by `Intl` extension or try to determinate floating point automatically 
+	 *              and return `float` or `NULL`.
+	 * @var \string[]|\Closure[]
 	 */
 	protected $validators = ['Number'];
 
@@ -76,7 +76,7 @@ implements	\MvcCore\Ext\Forms\Fields\IVisibleField,
 
 	/**
 	 * Set numeric field value as `float`.
-	 * @param float|NULL $value 
+	 * @param  float|NULL $value 
 	 * @return \MvcCore\Ext\Forms\Validators\Number
 	 */
 	public function SetValue ($value) {
@@ -94,7 +94,7 @@ implements	\MvcCore\Ext\Forms\Fields\IVisibleField,
 	 * - Set up required.
 	 * - Set up translate boolean property.
 	 * - Set up pattern validator automatically if any `pattern` property defined.
-	 * @param \MvcCore\Ext\Form $form
+	 * @param  \MvcCore\Ext\Form $form
 	 * @throws \InvalidArgumentException
 	 * @return \MvcCore\Ext\Forms\Fields\Number
 	 */
@@ -107,7 +107,7 @@ implements	\MvcCore\Ext\Forms\Fields\IVisibleField,
 
 	/**
 	 * Return field specific data for validator.
-	 * @param array $fieldPropsDefaultValidValues 
+	 * @param  array $fieldPropsDefaultValidValues 
 	 * @return array
 	 */
 	public function & GetValidatorData ($fieldPropsDefaultValidValues = []) {

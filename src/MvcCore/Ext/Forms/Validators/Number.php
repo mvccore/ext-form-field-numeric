@@ -15,8 +15,8 @@ namespace MvcCore\Ext\Forms\Validators;
 
 /**
  * Responsibility: Validate raw user input. Parse float value if possible by 
- *				   `Intl` extension or try to determinate floating point 
- *				   automatically and return `float` or `NULL`.
+ *                 `Intl` extension or try to determinate floating point 
+ *                 automatically and return `float` or `NULL`.
  */
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
 class		Number 
@@ -60,8 +60,8 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 	/**
 	 * Validate raw user input. Parse float value if possible by `Intl` extension 
 	 * or try to determinate floating point automatically and return `float` or `NULL`.
-	 * @param string|array			$submitValue Raw user input.
-	 * @return string|array|NULL	Safe submitted value or `NULL` if not possible to return safe value.
+	 * @param  string|array      $rawSubmittedValue Raw user input.
+	 * @return string|array|NULL Safe submitted value or `NULL` if not possible to return safe value.
 	 */
 	public function Validate ($rawSubmittedValue) {
 		$rawSubmittedValue = (string) $rawSubmittedValue;
@@ -109,7 +109,7 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 
 	/**
 	 * Parse raw user input by automatic floating point number detection.
-	 * @param string $rawSubmittedValue 
+	 * @param  string $rawSubmittedValue 
 	 * @return Float|NULL
 	 */
 	protected function parseFloat ($rawSubmittedValue) {

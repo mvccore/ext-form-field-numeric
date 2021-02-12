@@ -15,11 +15,11 @@ namespace MvcCore\Ext\Forms\Fields;
 
 /**
  * Responsibility: init, pre-dispatch and render `<input>` HTML element 
- *				   with type `range`. `Range` field has it's own 
- *				   validator(s) to parse and check submitted value by
- *				   min/max/step/pattern. This field always 
- *				   return parsed `float` or `NULL` or for `multiple`
- *				   field it always return array of `float`s or empty array.
+ *                 with type `range`. `Range` field has it's own 
+ *                 validator(s) to parse and check submitted value by
+ *                 min/max/step/pattern. This field always 
+ *                 return parsed `float` or `NULL` or for `multiple`
+ *                 field it always return array of `float`s or empty array.
  */
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
 class		Range 
@@ -37,8 +37,8 @@ implements	\MvcCore\Ext\Forms\Fields\IMultiple {
 	/**
 	 * Validators: 
 	 * - `Range` -  validate numeric raw user input. Parse numeric value (or two values) by locale conventions
-	 *				and check minimum, maximum and step if necessary.
-	 * @var string[]|\Closure[]
+	 *              and check minimum, maximum and step if necessary.
+	 * @var \string[]|\Closure[]
 	 */
 	protected $validators = ['Range'];
 
@@ -109,7 +109,7 @@ implements	\MvcCore\Ext\Forms\Fields\IMultiple {
 	 * `array` of `float`s. If `Range` field has not `multiple` 
 	 * attribute, set to this function `float`.
 	 * If you don't want any pre initialized value, set `NULL`.
-	 * @param array|float|NULL $value
+	 * @param  array|float|NULL $value
 	 * @return \MvcCore\Ext\Forms\Fields\Select
 	 */
 	public function SetValue ($value) {
@@ -120,7 +120,7 @@ implements	\MvcCore\Ext\Forms\Fields\IMultiple {
 
 	/**
 	 * Return field specific data for validator.
-	 * @param array $fieldPropsDefaultValidValues 
+	 * @param  array $fieldPropsDefaultValidValues 
 	 * @return array
 	 */
 	public function & GetValidatorData ($fieldPropsDefaultValidValues = []) {

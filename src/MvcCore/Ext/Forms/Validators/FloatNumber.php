@@ -15,8 +15,8 @@ namespace MvcCore\Ext\Forms\Validators;
 
 /**
  * Responsibility: Validate raw user input. Parse float value if possible by 
- *				   `Intl` extension or try to determinate floating point 
- *				   automatically and return `float` or `NULL`.
+ *                 `Intl` extension or try to determinate floating point 
+ *                 automatically and return `float` or `NULL`.
  */
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
 class FloatNumber extends \MvcCore\Ext\Forms\Validators\Number {
@@ -38,8 +38,8 @@ class FloatNumber extends \MvcCore\Ext\Forms\Validators\Number {
 	/**
 	 * Validate raw user input. Parse float value if possible by `Intl` extension 
 	 * or try to determinate floating point automatically and return `float` or `NULL`.
-	 * @param string|array	$submitValue Raw user input.
-	 * @return float|NULL	Safe submitted value or `NULL` if not possible to return safe value.
+	 * @param  string|array $rawSubmittedValue Raw user input.
+	 * @return float|NULL   Safe submitted value or `NULL` if not possible to return safe value.
 	 */
 	public function Validate ($rawSubmittedValue) {
 		$rawSubmittedValue = trim((string) $rawSubmittedValue);

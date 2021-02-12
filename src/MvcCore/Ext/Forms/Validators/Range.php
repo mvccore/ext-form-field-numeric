@@ -15,8 +15,8 @@ namespace MvcCore\Ext\Forms\Validators;
 
 /**
  * Responsibility: Validate numeric raw user input. Parse numeric value or 
- *				   values by locale conventions and check minimum, maximum and 
- *				   step if necessary.
+ *                 values by locale conventions and check minimum, maximum and 
+ *                 step if necessary.
  */
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
 class Range extends \MvcCore\Ext\Forms\Validators\Number {
@@ -36,7 +36,7 @@ class Range extends \MvcCore\Ext\Forms\Validators\Number {
 	 * validator during submit before every `Validate()` method call.
 	 * This method is also called once, when validator instance is separately 
 	 * added into already created field instance to process any field checking.
-	 * @param \MvcCore\Ext\Forms\Field $field 
+	 * @param  \MvcCore\Ext\Forms\Field $field 
 	 * @return \MvcCore\Ext\Forms\Validator
 	 */
 	public function SetField (\MvcCore\Ext\Forms\IField $field) {
@@ -51,8 +51,8 @@ class Range extends \MvcCore\Ext\Forms\Validators\Number {
 	/**
 	 * Validate numeric raw user input. Parse numeric value or values by locale conventions
 	 * and check minimum, maximum and step if necessary.
-	 * @param string|array			$submitValue Raw user input.
-	 * @return string|array|NULL	Safe submitted value or `NULL` if not possible to return safe value.
+	 * @param  string|array      $rawSubmittedValue Raw user input.
+	 * @return string|array|NULL Safe submitted value or `NULL` if not possible to return safe value.
 	 */
 	public function Validate ($rawSubmittedValue) {
 		$multiple = $this->field->GetMultiple();
