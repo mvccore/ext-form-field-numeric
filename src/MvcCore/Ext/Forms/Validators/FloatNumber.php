@@ -25,7 +25,7 @@ class FloatNumber extends \MvcCore\Ext\Forms\Validators\Number {
 	 * Error message index(es).
 	 * @var int
 	 */
-	const ERROR_FLOAT = 5;
+	const ERROR_FLOAT = 6;
 
 	/**
 	 * Validation failure message template definitions.

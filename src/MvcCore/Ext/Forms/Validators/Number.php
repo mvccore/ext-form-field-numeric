@@ -57,18 +57,51 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 		'step'	=> NULL,
 	];
 	
+	
+	/**
+	 * Create number validator instance.
+	 * 
+	 * @param  array     $cfg
+	 * Config array with protected properties and it's 
+	 * values which you want to configure, presented 
+	 * in camel case properties names syntax.
+	 * 
+	 * @param  int|float $min
+	 * Minimum value for `Number` field(s) in `float` or in `integer`.
+	 * @param  int|float $max
+	 * Maximum value for `Number` field(s) in `float` or in `integer`.
+	 * @param  int|float $step
+	 * Step value for `Number` in `float` or in `integer`.
+	 * 
+	 * @throws \InvalidArgumentException 
+	 * @return void
+	 */
+	public function __construct(
+		array $cfg = [],
+		$min = NULL,
+		$max = NULL,
+		$step = NULL
+	) {
+		$errorMessages = static::$errorMessages;
+		$this->consolidateCfg($cfg, func_get_args(), func_num_args());
+		parent::__construct($cfg);
+		if (self::$errorMessages !== $errorMessages)
+			static::$errorMessages = array_replace(
+				self::$errorMessages,
+				$errorMessages
+			);
+	}
+
 	/**
 	 * Validate raw user input. Parse float value if possible by `Intl` extension 
 	 * or try to determinate floating point automatically and return `float` or `NULL`.
-	 * @param  string|array      $rawSubmittedValue Raw user input.
-	 * @return string|array|NULL Safe submitted value or `NULL` if not possible to return safe value.
+	 * @param  string|array   $rawSubmittedValue Raw user input.
+	 * @return int|float|NULL Safe submitted value or `NULL` if not possible to return safe value.
 	 */
 	public function Validate ($rawSubmittedValue) {
 		$rawSubmittedValue = (string) $rawSubmittedValue;
 		if (mb_strlen($rawSubmittedValue) === 0) return NULL;
-
 		$result = $this->parseFloat($rawSubmittedValue);
-
 		if ($result === NULL) {
 			$this->field->AddValidationError(
 				static::GetErrorMessage(static::ERROR_NUMBER)
@@ -98,7 +131,7 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 		if ($this->step !== NULL && $this->step !== 0) {
 			$dividingResultFloat = floatval($result) / $this->step;
 			$dividingResultInt = floatval(intval($dividingResultFloat));
-			if ($dividingResultFloat !== $dividingResultInt) 
+			if (!$this->compareFloats($dividingResultFloat, $dividingResultInt)) 
 				$this->field->AddValidationError(
 					$this->form->GetDefaultErrorMsg(static::ERROR_DIVISIBLE),
 					[$this->step]
@@ -129,5 +162,18 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 		$result = $parser->Parse($rawSubmittedValue);
 
 		return $result;
+	}
+	
+	/**
+	 * Return `TRUE` if given floats are absolutelly equal.
+	 * @param  float $a (required) Left operand
+	 * @param  float $b (required) Right operand
+	 * @return bool
+	 */
+	protected function compareFloats ($a, $b) {
+		$floatEpsilon = defined('PHP_FLOAT_EPSILON')
+			? PHP_FLOAT_EPSILON
+			: floatval('2.220446049250313E-16');
+		return abs($a - $b) < $floatEpsilon;
 	}
 }

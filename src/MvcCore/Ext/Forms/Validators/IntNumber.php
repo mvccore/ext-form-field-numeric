@@ -64,35 +64,4 @@ class IntNumber extends \MvcCore\Ext\Forms\Validators\Number {
 			}
 		}
 	}
-
-	/**
-	 * Return `TRUE` if given floats are absolutelly equal.
-	 * @param  float $a (required) Left operand
-	 * @param  float $b (required) Right operand
-	 * @return bool
-	 */
-	protected function compareFloats ($a, $b) {
-		$aInt = intval($a);
-		$bInt = intval($b);
-
-		$aIntLen = strlen(strval($aInt));
-		$bIntLen = strlen(strval($bInt));
-
-		$aStr = strval($a);
-		$bStr = strval($b);
-		if ($aStr === '') $aStr = '0';
-		if ($bStr === '') $bStr = '0';
-
-		if (strpos($aStr, '.') === FALSE) $aStr .= '.0';
-		if (strpos($bStr, '.') === FALSE) $bStr .= '.0';
-
-		$aStrLen = strlen($aStr);
-		$bStrLen = strlen($bStr);
-
-		$aPreciseLen = $aStrLen - $aIntLen - 1;
-		$bPreciseLen = $bStrLen - $bIntLen - 1;
-		$maxPreciseLen = max($aPreciseLen, $bPreciseLen);
-
-		return bccomp($a, $b, $maxPreciseLen) === 0;
-	}
 }

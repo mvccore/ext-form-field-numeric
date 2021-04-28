@@ -28,8 +28,53 @@ class Range extends \MvcCore\Ext\Forms\Validators\Number {
 	 * @var array
 	 */
 	protected static $fieldSpecificProperties = [
+		'min'		=> NULL, 
+		'max'		=> NULL, 
+		'step'		=> NULL,
 		'multiple'	=> NULL,
 	];
+
+	
+	/**
+	 * Create range validator instance.
+	 * 
+	 * @param  array     $cfg
+	 * Config array with protected properties and it's 
+	 * values which you want to configure, presented 
+	 * in camel case properties names syntax.
+	 * 
+	 * @param  int|float $min
+	 * Minimum value for `Number` field(s) in `float` or in `integer`.
+	 * @param  int|float $max
+	 * Maximum value for `Number` field(s) in `float` or in `integer`.
+	 * @param  int|float $step
+	 * Step value for `Number` in `float` or in `integer`.
+	 * 
+	 * @param  bool      $multiple
+	 * If control is `<input>` with `type` as `file` or `email`,
+	 * this Boolean attribute indicates whether the user can enter 
+	 * more than one value.
+	 * If control is `<input>` with `type` as `range`, there are 
+	 * rendered two connected sliders (range controls) as one control
+	 * to simulate range from and range to. Result value will be array.
+	 * If control is `<select>`, this Boolean attribute indicates 
+	 * that multiple options can be selected in the list. When 
+	 * multiple is specified, most browsers will show a scrolling 
+	 * list box instead of a single line drop down.
+	 * 
+	 * @throws \InvalidArgumentException 
+	 * @return void
+	 */
+	public function __construct(
+		array $cfg = [],
+		$min = NULL,
+		$max = NULL,
+		$step = NULL,
+		$multiple = NULL
+	) {
+		$this->consolidateCfg($cfg, func_get_args(), func_num_args());
+		parent::__construct($cfg);
+	}
 
 	/**
 	 * Set up field instance, where is validated value by this 
@@ -61,10 +106,8 @@ class Range extends \MvcCore\Ext\Forms\Validators\Number {
 				? $rawSubmittedValue 
 				: explode(',', (string) $rawSubmittedValue);
 			$result = [];
-			foreach ($rawSubmitValues as $rawSubmitValue) {
-				$resultItem = parent::Validate($rawSubmitValue);
-				if ($resultItem !== NULL) $result[] = $resultItem;
-			}
+			foreach ($rawSubmitValues as $rawSubmitValue) 
+				$result[] = parent::Validate($rawSubmitValue);
 			return $result;
 		} else {
 			return parent::Validate((string) $rawSubmittedValue);
