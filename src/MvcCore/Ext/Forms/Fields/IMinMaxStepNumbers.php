@@ -26,14 +26,14 @@ interface IMinMaxStepNumbers {
 	/**
 	 * Get minimum value for `Number` field(s) in `float`.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-min
-	 * @return float|NULL
+	 * @return int|float|NULL
 	 */
 	public function GetMin ();
 
 	/**
 	 * Set minimum value for `Number` field(s) in `float` or in `integer`.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-min
-	 * @param  float|int|NULL $min
+	 * @param  int|float|NULL $min
 	 * @return \MvcCore\Ext\Forms\Field
 	 */
 	public function SetMin ($min);
@@ -41,14 +41,14 @@ interface IMinMaxStepNumbers {
 	/**
 	 * Get maximum value for `Number` field(s) in `float`.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-max
-	 * @return float|NULL
+	 * @return int|float|NULL
 	 */
 	public function GetMax ();
 
 	/**
 	 * Set maximum value for `Number` field(s) in `float` or in `integer`.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-max
-	 * @param  float|int|NULL $max
+	 * @param  int|float|NULL $max
 	 * @return \MvcCore\Ext\Forms\Field
 	 */
 	public function SetMax ($max);
@@ -56,14 +56,14 @@ interface IMinMaxStepNumbers {
 	/**
 	 * Get step value for `Number` in `float`.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-step
-	 * @return float|NULL
+	 * @return int|float|NULL
 	 */
 	public function GetStep ();
 
 	/**
 	 * Set step value for `Number` in `float` or in `integer`.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-step
-	 * @param  float|int|NULL $step
+	 * @param  int|float|NULL $step
 	 * @return \MvcCore\Ext\Forms\Field
 	 */
 	public function SetStep ($step);
