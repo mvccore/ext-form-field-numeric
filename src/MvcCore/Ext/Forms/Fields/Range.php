@@ -106,6 +106,8 @@ implements	\MvcCore\Ext\Forms\Fields\IMultiple {
 	 * Form field specific name, used to identify submitted value.
 	 * This value is required for all form fields.
 	 * @param  string                                           $type 
+	 * Fixed field order number, null by default.
+	 * @param  int                                              $fieldOrder
 	 * Form field type, used in `<input type="...">` attribute value.
 	 * Every typed field has it's own string value, but base field type 
 	 * `\MvcCore\Ext\Forms\Field` has `NULL`.
@@ -294,6 +296,7 @@ implements	\MvcCore\Ext\Forms\Fields\IMultiple {
 
 		$name = NULL, 
 		$type = NULL, 
+		$fieldOrder = NULL,
 		$value = NULL, 
 		$title = NULL, 
 		$translate = NULL, 
