@@ -329,6 +329,7 @@ implements	\MvcCore\Ext\Forms\Fields\IVisibleField,
 	 */
 	public function SetForm (\MvcCore\Ext\IForm $form) {
 		/** @var \MvcCore\Ext\Forms\Field $this */
+		if ($this->form !== NULL) return $this;
 		parent::SetForm($form);
 		$this->setFormPattern();
 		return $this;
