@@ -32,7 +32,7 @@ class FloatNumber extends \MvcCore\Ext\Forms\Validators\Number {
 	 * @var array
 	 */
 	protected static $errorMessages = [
-		self::ERROR_FLOAT	=> "Field `{0}` requires a valid float number (from `{1}` to `{2}`).",
+		self::ERROR_FLOAT	=> "Field '{0}' requires a valid float number (from '{1}' to '{2}').",
 	];
 
 	/**

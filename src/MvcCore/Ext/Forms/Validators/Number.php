@@ -40,11 +40,11 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 	 * @var array
 	 */
 	protected static $errorMessages = [
-		self::ERROR_NUMBER		=> "Field `{0}` requires a valid number.",
-		self::ERROR_GREATER		=> "Field `{0}` requires a value equal or greater than `{1}`.",
-		self::ERROR_LOWER		=> "Field `{0}` requires a value equal or lower than `{1}`.",
-		self::ERROR_RANGE		=> "Field `{0}` requires a value of `{1}` to `{2}` inclusive.",
-		self::ERROR_DIVISIBLE	=> "Field `{0}` requires a divisible value of `{1}`.",
+		self::ERROR_NUMBER		=> "Field '{0}' requires a valid number.",
+		self::ERROR_GREATER		=> "Field '{0}' requires a value equal or greater than '{1}'.",
+		self::ERROR_LOWER		=> "Field '{0}' requires a value equal or lower than '{1}'.",
+		self::ERROR_RANGE		=> "Field '{0}' requires a value of '{1}' to '{2}' inclusive.",
+		self::ERROR_DIVISIBLE	=> "Field '{0}' requires a divisible value of '{1}'.",
 	];
 
 	/**

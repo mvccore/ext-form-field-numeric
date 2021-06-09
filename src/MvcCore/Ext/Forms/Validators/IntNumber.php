@@ -32,7 +32,7 @@ class IntNumber extends \MvcCore\Ext\Forms\Validators\Number {
 	 * @var array
 	 */
 	protected static $errorMessages = [
-		self::ERROR_INT	=> "Field `{0}` requires a valid integer (from `{1}` to `{2}` incl.).",
+		self::ERROR_INT	=> "Field '{0}' requires a valid integer (from '{1}' to '{2}' incl.).",
 	];
 
 	/**
