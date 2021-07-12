@@ -56,14 +56,14 @@ interface IMinMaxStepNumbers {
 	/**
 	 * Get step value for `Number` in `float`.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-step
-	 * @return int|float|NULL
+	 * @return int|float|string|NULL
 	 */
 	public function GetStep ();
 
 	/**
 	 * Set step value for `Number` in `float` or in `integer`.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-step
-	 * @param  int|float|NULL $step
+	 * @param  int|float|string|NULL $step
 	 * @return \MvcCore\Ext\Forms\Field
 	 */
 	public function SetStep ($step);

@@ -44,7 +44,7 @@ implements	\MvcCore\Ext\Forms\Fields\IVisibleField,
 	 * Comparison by PHP function version_compare();
 	 * @see http://php.net/manual/en/function.version-compare.php
 	 */
-	const VERSION = '5.1.8';
+	const VERSION = '5.1.9';
 
 	/**
 	 * Possible values: `number` and `range` in extended class.
@@ -211,7 +211,7 @@ implements	\MvcCore\Ext\Forms\Fields\IVisibleField,
 	 * Minimum value for `Number` field(s) in `float` or in `integer`.
 	 * @param  int|float              $max
 	 * Maximum value for `Number` field(s) in `float` or in `integer`.
-	 * @param  int|float              $step
+	 * @param  int|float|string       $step
 	 * Step value for `Number` in `float` or in `integer`.
 	 * 
 	 * @param  string                 $placeHolder

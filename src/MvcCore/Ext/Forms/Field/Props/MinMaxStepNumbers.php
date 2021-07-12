@@ -40,7 +40,7 @@ trait MinMaxStepNumbers {
 	/**
 	 * Step value for `Number` in `float` or in `integer`.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-step
-	 * @var int|float|NULL
+	 * @var int|float|string|NULL
 	 */
 	protected $step = NULL;
 
@@ -89,7 +89,7 @@ trait MinMaxStepNumbers {
 	/**
 	 * Get step value for `Number` in `float`.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-step
-	 * @return int|float|NULL
+	 * @return int|float|string|NULL
 	 */
 	public function GetStep () {
 		return $this->step;
@@ -98,12 +98,14 @@ trait MinMaxStepNumbers {
 	/**
 	 * Set step value for `Number` in `float` or in `integer`.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-step
-	 * @param  int|float|NULL $step
+	 * @param  int|float|string|NULL $step
 	 * @return \MvcCore\Ext\Forms\Field
 	 */
 	public function SetStep ($step) {
 		if ($step !== NULL) 
-			$this->step = is_numeric($step) ? $step : floatval($step);
+			$this->step = is_numeric($step) 
+				? $step 
+				: ($step === 'any' ? 'any' : floatval($step));
 		return $this;
 	}
 }

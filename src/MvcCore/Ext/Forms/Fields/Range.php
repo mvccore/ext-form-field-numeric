@@ -239,7 +239,7 @@ implements	\MvcCore\Ext\Forms\Fields\IMultiple {
 	 * Minimum value for `Number` field(s) in `float` or in `integer`.
 	 * @param  int|float                                        $max
 	 * Maximum value for `Number` field(s) in `float` or in `integer`.
-	 * @param  int|float                                        $step
+	 * @param  int|float|string                                 $step
 	 * Step value for `Number` in `float` or in `integer`.
 	 * 
 	 * @param  string                                           $placeHolder
