@@ -143,7 +143,7 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 	/**
 	 * Parse raw user input by automatic floating point number detection.
 	 * @param  string $rawSubmittedValue 
-	 * @return Float|NULL
+	 * @return int|float|NULL
 	 */
 	protected function parseFloat ($rawSubmittedValue) {
 		$extToolsLocalesFloatParserClass = '\\MvcCore\\Ext\\Tools\\Locales\\FloatParser';
@@ -158,9 +158,7 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 			->SetPreferIntlParsing(FALSE);
 		if ($formLang = $this->form->GetLang()) $parser->SetLang($formLang);
 		if ($formLocale = $this->form->GetLocale()) $parser->SetLocale($formLocale);
-
 		$result = $parser->Parse($rawSubmittedValue);
-
 		return $result;
 	}
 	

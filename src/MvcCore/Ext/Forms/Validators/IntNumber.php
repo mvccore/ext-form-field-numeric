@@ -50,6 +50,8 @@ class IntNumber extends \MvcCore\Ext\Forms\Validators\Number {
 				static::GetErrorMessage(self::ERROR_INT)
 			);
 			return NULL;
+		} else if (is_int($result)) {
+			return $result;
 		} else {
 			$resultInt = intval(round($result));
 			if (!$this->compareFloats($result, floatval($resultInt))) {
