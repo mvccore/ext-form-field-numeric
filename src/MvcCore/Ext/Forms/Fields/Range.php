@@ -415,11 +415,12 @@ implements	\MvcCore\Ext\Forms\Fields\IMultiple {
 		if (!$this->form->GetFormTagRenderingStatus()) 
 			$attrsStr .= (strlen($attrsStr) > 0 ? ' ' : '')
 				. 'form="' . $this->form->GetId() . '"';
-		$valueStr = $this->multiple && gettype($this->value) == 'array' 
-			? implode(',', (array) $this->value) 
+		$valueStr = $this->multiple && is_array($this->value)
+			? implode(',', $this->value) 
 			: (string) $this->value;
-		$valueStr = htmlspecialchars_decode(htmlspecialchars($valueStr, ENT_QUOTES), ENT_QUOTES);
 		$formViewClass = $this->form->GetViewClass();
+		$view = $this->form->GetView() ?: $this->form->GetController()->GetView();
+		$valueStr = $view->EscapeAttr($valueStr);
 		/** @var \stdClass $templates */
 		$templates = static::$templates;
 		$result = $formViewClass::Format($templates->control, [
