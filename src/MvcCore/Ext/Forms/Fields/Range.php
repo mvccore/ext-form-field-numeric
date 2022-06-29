@@ -403,7 +403,7 @@ implements	\MvcCore\Ext\Forms\Fields\IMultiple {
 	 * @return string
 	 */
 	public function RenderControl () {
-		$attrsStr = $this->renderControlAttrsWithFieldVars([
+		$attrsStr = $this->RenderControlAttrsWithFieldVars([
 			'min', 'max', 'step',
 			'list',
 			'autoComplete',
