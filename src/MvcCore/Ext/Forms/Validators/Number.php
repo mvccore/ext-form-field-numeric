@@ -114,28 +114,41 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 			($result < $this->min || $result > $this->max)
 		) {
 			$this->field->AddValidationError(
-				$this->form->GetDefaultErrorMsg(static::ERROR_RANGE),
-				[$this->min, $this->max]
+				static::GetErrorMessage(self::ERROR_RANGE), [$this->min, $this->max]
 			);
 		} else if ($this->min !== NULL && $this->min > 0 && $result < $this->min) {
 			$this->field->AddValidationError(
-				$this->form->GetDefaultErrorMsg(static::ERROR_GREATER),
-				[$this->min]
+				static::GetErrorMessage(self::ERROR_GREATER), [$this->min]
 			);
 		} else if ($this->max !== NULL && $this->max > 0 && $result > $this->max) {
 			$this->field->AddValidationError(
-				$this->form->GetDefaultErrorMsg(static::ERROR_LOWER),
-				[$this->max]
+				static::GetErrorMessage(self::ERROR_LOWER), [$this->max]
 			);
 		}
 		if ($this->step !== NULL && $this->step !== 0) {
-			$dividingResultFloat = floatval($result) / $this->step;
+			$floatPrecision = @ini_get('precision');
+			if ($floatPrecision === FALSE) $floatPrecision = 14;
+			list(, $stepFractionsStr) = explode(
+				'.', (string) number_format($this->step, $floatPrecision, '.', '')
+			);
+			$stepFractionsStr = rtrim($stepFractionsStr, '0');
+			$stepFractionsLen = strlen($stepFractionsStr);
+			$dividingResultFloat = floatval($result) / floatval($this->step);
+			$dividingResultRound = round($dividingResultFloat);
+			$relativeEpsilon = floatval('2.220446049250313E-' . ($stepFractionsLen + 1));
+			if (abs($dividingResultFloat - $dividingResultRound) <= $relativeEpsilon) {
+				// if number is 123456.9999999999 , turn it into 123457.0
+				// if number is 123456.0000000001 , turn it into 123456.0
+				$dividingResultFloat = $dividingResultRound;
+			}
 			$dividingResultInt = floatval(intval($dividingResultFloat));
-			if (!$this->compareFloats($dividingResultFloat, $dividingResultInt)) 
+			if (!$this->compareFloats(
+				$dividingResultFloat, $dividingResultInt
+			)) {
 				$this->field->AddValidationError(
-					$this->form->GetDefaultErrorMsg(static::ERROR_DIVISIBLE),
-					[$this->step]
+					static::GetErrorMessage(self::ERROR_DIVISIBLE), [$this->step]
 				);
+			}
 		}
 		return $result;
 	}
