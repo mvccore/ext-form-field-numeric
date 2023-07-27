@@ -403,18 +403,18 @@ implements	\MvcCore\Ext\Forms\Fields\IMultiple {
 	 * @return string
 	 */
 	public function RenderControl () {
-		$attrsStr = $this->RenderControlAttrsWithFieldVars([
-			'min', 'max', 'step',
-			'list',
-			'autoComplete',
-			'placeHolder',
-		]);
+		$attrsStrItems = [
+			$this->RenderControlAttrsWithFieldVars([
+				'min', 'max', 'step',
+				'list',
+				'autoComplete',
+				'placeHolder',
+			])
+		];
 		if ($this->multiple) 
-			$attrsStr .= (strlen($attrsStr) > 0 ? ' ' : '')
-				. 'multiple="multiple"';
+			$attrsStrItems[] = 'multiple="multiple"';
 		if (!$this->form->GetFormTagRenderingStatus()) 
-			$attrsStr .= (strlen($attrsStr) > 0 ? ' ' : '')
-				. 'form="' . $this->form->GetId() . '"';
+			$attrsStrItems[] = 'form="' . $this->form->GetId() . '"';
 		$valueStr = $this->multiple && is_array($this->value)
 			? implode(',', $this->value) 
 			: (string) $this->value;
@@ -428,7 +428,7 @@ implements	\MvcCore\Ext\Forms\Fields\IMultiple {
 			'name'		=> $this->name . ($this->multiple ? '[]' : ''),
 			'type'		=> $this->type,
 			'value'		=> $valueStr . '" data-value="' . $valueStr,
-			'attrs'		=> strlen($attrsStr) > 0 ? ' ' . $attrsStr : '',
+			'attrs'		=> count($attrsStrItems) > 0 ? ' ' . implode(' ', $attrsStrItems) : '',
 		]);
 		return $this->renderControlWrapper($result);
 	}
