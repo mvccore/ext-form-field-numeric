@@ -103,53 +103,11 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 		if (mb_strlen($rawSubmittedValue) === 0) return NULL;
 		$result = $this->parseFloat($rawSubmittedValue);
 		if ($result === NULL) {
-			$this->field->AddValidationError(
-				static::GetErrorMessage(static::ERROR_NUMBER)
-			);
+			$this->validateAddErrorNoNumber();
 			return NULL;
 		}
-		if (
-			$this->min !== NULL && $this->max !== NULL &&
-			$this->min > 0 && $this->max > 0 &&
-			($result < $this->min || $result > $this->max)
-		) {
-			$this->field->AddValidationError(
-				static::GetErrorMessage(self::ERROR_RANGE), [$this->min, $this->max]
-			);
-		} else if ($this->min !== NULL && $this->min > 0 && $result < $this->min) {
-			$this->field->AddValidationError(
-				static::GetErrorMessage(self::ERROR_GREATER), [$this->min]
-			);
-		} else if ($this->max !== NULL && $this->max > 0 && $result > $this->max) {
-			$this->field->AddValidationError(
-				static::GetErrorMessage(self::ERROR_LOWER), [$this->max]
-			);
-		}
-		if ($this->step !== NULL && $this->step !== 0) {
-			$floatPrecision = @ini_get('precision');
-			if ($floatPrecision === FALSE) $floatPrecision = 14;
-			list(, $stepFractionsStr) = explode(
-				'.', (string) number_format($this->step, $floatPrecision, '.', '')
-			);
-			$stepFractionsStr = rtrim($stepFractionsStr, '0');
-			$stepFractionsLen = strlen($stepFractionsStr);
-			$dividingResultFloat = floatval($result) / floatval($this->step);
-			$dividingResultRound = round($dividingResultFloat);
-			$relativeEpsilon = floatval('2.220446049250313E-' . ($stepFractionsLen + 1));
-			if (abs($dividingResultFloat - $dividingResultRound) <= $relativeEpsilon) {
-				// if number is 123456.9999999999 , turn it into 123457.0
-				// if number is 123456.0000000001 , turn it into 123456.0
-				$dividingResultFloat = $dividingResultRound;
-			}
-			$dividingResultInt = floatval(intval($dividingResultFloat));
-			if (!$this->compareFloats(
-				$dividingResultFloat, $dividingResultInt
-			)) {
-				$this->field->AddValidationError(
-					static::GetErrorMessage(self::ERROR_DIVISIBLE), [$this->step]
-				);
-			}
-		}
+		$this->validateMinMax($result);
+		$this->validateStep($result);
 		return $result;
 	}
 
@@ -186,5 +144,73 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 			? PHP_FLOAT_EPSILON
 			: floatval('2.220446049250313E-16');
 		return abs($a - $b) < $floatEpsilon;
+	}
+	
+	/**
+	 * Add validation error about invalid number.
+	 * @return void
+	 */
+	protected function validateAddErrorNoNumber () {
+		$this->field->AddValidationError(
+			static::GetErrorMessage(static::ERROR_NUMBER)
+		);
+	}
+
+	/**
+	 * Validate min and max attribute.
+	 * @param  float $result 
+	 * @return void
+	 */
+	protected function validateMinMax ($result) {
+		if (
+			$this->min !== NULL && $this->max !== NULL &&
+			$this->min > 0 && $this->max > 0 &&
+			($result < $this->min || $result > $this->max)
+		) {
+			$this->field->AddValidationError(
+				static::GetErrorMessage(self::ERROR_RANGE), [$this->min, $this->max]
+			);
+		} else if ($this->min !== NULL && $this->min > 0 && $result < $this->min) {
+			$this->field->AddValidationError(
+				static::GetErrorMessage(self::ERROR_GREATER), [$this->min]
+			);
+		} else if ($this->max !== NULL && $this->max > 0 && $result > $this->max) {
+			$this->field->AddValidationError(
+				static::GetErrorMessage(self::ERROR_LOWER), [$this->max]
+			);
+		}
+	}
+
+	/**
+	 * Validate step attribute.
+	 * @param  float $result 
+	 * @return void
+	 */
+	protected function validateStep ($result) {
+		if ($this->step !== NULL && !$this->compareFloats(floatval($this->step), 0.0)) {
+			$floatPrecision = @ini_get('precision');
+			if ($floatPrecision === FALSE) $floatPrecision = 14;
+			list(, $stepFractionsStr) = explode(
+				'.', (string) number_format($this->step, $floatPrecision, '.', '')
+			);
+			$stepFractionsStr = rtrim($stepFractionsStr, '0');
+			$stepFractionsLen = strlen($stepFractionsStr);
+			$dividingResultFloat = floatval($result) / floatval($this->step);
+			$dividingResultRound = round($dividingResultFloat);
+			$relativeEpsilon = floatval('2.220446049250313E-' . ($stepFractionsLen + 1));
+			if (abs($dividingResultFloat - $dividingResultRound) <= $relativeEpsilon) {
+				// if number is 123456.9999999999 , turn it into 123457.0
+				// if number is 123456.0000000001 , turn it into 123456.0
+				$dividingResultFloat = $dividingResultRound;
+			}
+			$dividingResultInt = floatval(intval($dividingResultFloat));
+			if (!$this->compareFloats(
+				$dividingResultFloat, $dividingResultInt
+			)) {
+				$this->field->AddValidationError(
+					static::GetErrorMessage(self::ERROR_DIVISIBLE), [$this->step]
+				);
+			}
+		}
 	}
 }

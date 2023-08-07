@@ -46,16 +46,29 @@ class FloatNumber extends \MvcCore\Ext\Forms\Validators\Number {
 		if (mb_strlen($rawSubmittedValue) === 0) return NULL;
 		$result = $this->parseFloat($rawSubmittedValue);
 		if ($result === NULL) {
-			$min = $this->min === NULL 
-				? (defined('PHP_FLOAT_MIN') ? PHP_FLOAT_MIN : floatval('-1.79e308'))
-				: (string) $this->min;
-			$max = $this->max === NULL 
-				? (defined('PHP_FLOAT_MAX') ? PHP_FLOAT_MAX : floatval('1.79e308'))
-				: (string) $this->max;
-			$this->field->AddValidationError(
-				static::GetErrorMessage(self::ERROR_FLOAT, [$min, $max])
-			);
+			$this->validateAddErrorNoFloat();
+			return NULL;
 		}
+		$resultFloat = floatval($result);
+		$this->validateMinMax($resultFloat);
+		$this->validateStep($resultFloat);
 		return $result;
 	}
+
+	/**
+	 * Add validation error about invalid float.
+	 * @return void
+	 */
+	protected function validateAddErrorNoFloat () {
+		$min = $this->min === NULL 
+			? (defined('PHP_FLOAT_MIN') ? PHP_FLOAT_MIN : floatval('-1.79e308'))
+			: (string) $this->min;
+		$max = $this->max === NULL 
+			? (defined('PHP_FLOAT_MAX') ? PHP_FLOAT_MAX : floatval('1.79e308'))
+			: (string) $this->max;
+		$this->field->AddValidationError(
+			static::GetErrorMessage(self::ERROR_FLOAT, [$min, $max])
+		);
+	}
+
 }

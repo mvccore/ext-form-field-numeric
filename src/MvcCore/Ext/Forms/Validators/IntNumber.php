@@ -46,24 +46,32 @@ class IntNumber extends \MvcCore\Ext\Forms\Validators\Number {
 		if (mb_strlen($rawSubmittedValue) === 0) return NULL;
 		$result = $this->parseFloat($rawSubmittedValue);
 		if ($result === NULL) {
-			$this->field->AddValidationError(
-				static::GetErrorMessage(self::ERROR_INT)
-			);
+			$this->validateAddErrorNoInt();
 			return NULL;
-		} else if (is_int($result)) {
-			return $result;
-		} else {
+		}
+		if (is_float($result)) {
 			$resultInt = intval(round($result));
 			if (!$this->compareFloats($result, floatval($resultInt))) {
-				$min = $this->min === NULL ? -PHP_INT_MAX : $this->min;
-				$max = $this->max === NULL ? PHP_INT_MAX : $this->max;
-				$this->field->AddValidationError(
-					static::GetErrorMessage(self::ERROR_INT, [$min, $max])
-				);
+				$this->validateAddErrorNoInt();
 				return NULL;
-			} else {
-				return $resultInt;
 			}
+			$result = $resultInt;
 		}
+		$resultFloat = floatval($result);
+		$this->validateMinMax($resultFloat);
+		$this->validateStep($resultFloat);
+		return $result;
+	}
+
+	/**
+	 * Add validation error about invalid integer.
+	 * @return void
+	 */
+	protected function validateAddErrorNoInt () {
+		$min = $this->min === NULL ? -PHP_INT_MAX : $this->min;
+		$max = $this->max === NULL ? PHP_INT_MAX : $this->max;
+		$this->field->AddValidationError(
+			static::GetErrorMessage(self::ERROR_INT, [$min, $max])
+		);
 	}
 }
