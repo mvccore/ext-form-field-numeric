@@ -44,7 +44,7 @@ implements	\MvcCore\Ext\Forms\Fields\IVisibleField,
 	 * Comparison by PHP function version_compare();
 	 * @see http://php.net/manual/en/function.version-compare.php
 	 */
-	const VERSION = '5.2.1';
+	const VERSION = '5.2.2';
 
 	/**
 	 * Possible values: `number` and `range` in extended class.
@@ -371,7 +371,7 @@ implements	\MvcCore\Ext\Forms\Fields\IVisibleField,
 		$this->preDispatchInputMode();
 		$this->preDispatchTabIndex();
 	}
-	
+
 	/**
 	 * This INTERNAL method is called from `\MvcCore\Ext\Forms\Field\Rendering` 
 	 * in rendering process. Do not use this method even if you don't develop any form field.
@@ -404,4 +404,5 @@ implements	\MvcCore\Ext\Forms\Fields\IVisibleField,
 		]);
 		return $this->renderControlWrapper($result);
 	}
+
 }
