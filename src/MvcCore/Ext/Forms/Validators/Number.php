@@ -91,7 +91,7 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 				$errorMessages
 			);
 	}
-
+	
 	/**
 	 * Validate raw user input. Parse float value if possible by `Intl` extension 
 	 * or try to determinate floating point automatically and return `float` or `NULL`.
@@ -131,19 +131,6 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 		if ($formLocale = $this->form->GetLocale()) $parser->SetLocale($formLocale);
 		$result = $parser->Parse($rawSubmittedValue);
 		return $result;
-	}
-	
-	/**
-	 * Return `TRUE` if given floats are absolutelly equal.
-	 * @param  float $a (required) Left operand
-	 * @param  float $b (required) Right operand
-	 * @return bool
-	 */
-	protected function compareFloats ($a, $b) {
-		$floatEpsilon = defined('PHP_FLOAT_EPSILON')
-			? PHP_FLOAT_EPSILON
-			: floatval('2.220446049250313E-16');
-		return abs($a - $b) < $floatEpsilon;
 	}
 	
 	/**
@@ -187,7 +174,8 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 	 * @return void
 	 */
 	protected function validateStep ($result) {
-		if ($this->step !== NULL && !$this->compareFloats(floatval($this->step), 0.0)) {
+		$toolClass = static::$toolClass;
+		if ($this->step !== NULL && !$toolClass::CompareFloats(floatval($this->step), 0.0)) {
 			$floatPrecision = @ini_get('precision');
 			if ($floatPrecision === FALSE) $floatPrecision = 14;
 			list(, $stepFractionsStr) = explode(
@@ -204,7 +192,7 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 				$dividingResultFloat = $dividingResultRound;
 			}
 			$dividingResultInt = floatval(intval($dividingResultFloat));
-			if (!$this->compareFloats(
+			if (!$toolClass::CompareFloats(
 				$dividingResultFloat, $dividingResultInt
 			)) {
 				$this->field->AddValidationError(
@@ -213,4 +201,5 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 			}
 		}
 	}
+	
 }

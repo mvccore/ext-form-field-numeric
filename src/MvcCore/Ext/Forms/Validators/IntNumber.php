@@ -51,7 +51,8 @@ class IntNumber extends \MvcCore\Ext\Forms\Validators\Number {
 		}
 		if (is_float($result)) {
 			$resultInt = intval(round($result));
-			if (!$this->compareFloats($result, floatval($resultInt))) {
+			$toolClass = static::$toolClass;
+			if (!$toolClass::CompareFloats($result, floatval($resultInt))) {
 				$this->validateAddErrorNoInt();
 				return NULL;
 			}
