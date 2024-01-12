@@ -56,7 +56,11 @@ implements	\MvcCore\Ext\Forms\Fields\IVisibleField,
 	 * Validators: 
 	 * - `Number` - to parse and check raw user input. Parse float value if possible 
 	 *              by `Intl` extension or try to determinate floating point automatically 
-	 *              and return `float` or `NULL`.
+	 *              and return `float` or return `NULL`.
+	 * - `FloatNumber` - to parse and check raw user input. Parse float value if possible 
+	 *                   by `Intl` extension and return always `float` or return `NULL`.
+	 * - `IntNumber` - to parse and check raw user input. Parse integer value if possible 
+	 *                 by `Intl` extension or return `NULL`.
 	 * @var \string[]|\Closure[]
 	 */
 	protected $validators = ['Number'];
