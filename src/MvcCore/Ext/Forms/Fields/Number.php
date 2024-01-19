@@ -247,7 +247,7 @@ implements	\MvcCore\Ext\Forms\Fields\IVisibleField,
 	 * - `url`     : URL input. Prefer `<input type="url">`.
 	 * 
 	 * @param  string                 $list
-	 * Element `list` attribute value - the `<list>` element `id` attribute value.
+	 * `DataList` form instance or `DataList` field unique name.
 	 * 
 	 * @param  string                 $wrapper
 	 * Html code wrapper, wrapper has to contain replacement in string 
@@ -384,6 +384,11 @@ implements	\MvcCore\Ext\Forms\Fields\IVisibleField,
 	 * @return string
 	 */
 	public function RenderControl () {
+		$listBefore = NULL;
+		if ($this->list !== NULL) {
+			$listBefore = $this->list;
+			$this->list = $this->form->GetField($this->list)->GetId();
+		}
 		$attrsStrItems = [
 			$this->RenderControlAttrsWithFieldVars([
 				'min', 'max', 'step',
@@ -393,6 +398,7 @@ implements	\MvcCore\Ext\Forms\Fields\IVisibleField,
 				'inputMode',
 			])
 		];
+		$this->list = $listBefore;
 		if (!$this->form->GetFormTagRenderingStatus()) 
 			$attrsStrItems[] = 'form="' . $this->form->GetId() . '"';
 		$formViewClass = $this->form->GetViewClass();
