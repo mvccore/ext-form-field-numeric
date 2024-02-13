@@ -178,9 +178,7 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 		if ($this->step !== NULL && !$toolClass::CompareFloats(floatval($this->step), 0.0)) {
 			$floatPrecision = @ini_get('precision');
 			if ($floatPrecision === FALSE) $floatPrecision = 14;
-			list(, $stepFractionsStr) = explode(
-				'.', (string) number_format($this->step, $floatPrecision, '.', '')
-			);
+			list(, $stepFractionsStr) = explode('.', number_format($this->step, $floatPrecision, '.', ''));
 			$stepFractionsStr = rtrim($stepFractionsStr, '0');
 			$stepFractionsLen = strlen($stepFractionsStr);
 			$dividingResultFloat = floatval($result) / floatval($this->step);
