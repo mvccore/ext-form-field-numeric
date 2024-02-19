@@ -35,6 +35,8 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 	const ERROR_RANGE = 3;
 	const ERROR_DIVISIBLE = 4;
 
+	const FLOAT_PARSER_INTERFACE = '\\MvcCore\\Ext\\Tools\\Locales\\IFloatParser';
+
 	/**
 	 * Validation failure message template definitions.
 	 * @var array
@@ -56,7 +58,42 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 		'max'	=> NULL, 
 		'step'	=> NULL,
 	];
+
+	/**
+	 * Float parser class. Parser class has to implement 
+	 * interface `\MvcCore\Ext\Tools\Locales\IFloatParser`.
+	 * @var string
+	 */
+	protected $parserClass = '\\MvcCore\\Ext\\Tools\\Locales\\FloatParser';
+
+	/**
+	 * Float parser instance. Parser instance implements
+	 * interface `\MvcCore\Ext\Tools\Locales\IFloatParser`.
+	 * @var \MvcCore\Ext\Tools\Locales\FloatParser|NULL
+	 */
+	protected $floatParser = NULL;
 	
+	/**
+	 * Set float parser class. Parser class has to implement 
+	 * interface `\MvcCore\Ext\Tools\Locales\IFloatParser`;
+	 * @param  string $parserClass
+	 * @return \MvcCore\Ext\Forms\Validators\Number
+	 */
+	public function SetParserClass ($parserClass) {
+		$toolClass = \MvcCore\Application::GetInstance()->GetToolClass();
+		$toolClass::CheckClassInterface($parserClass, static::FLOAT_PARSER_INTERFACE, TRUE, TRUE);
+		$this->parserClass = $parserClass;
+		return $this;
+	}
+
+	/**
+	 * Get float parser class. Parser class has to implement 
+	 * interface `\MvcCore\Ext\Tools\Locales\IFloatParser`;
+	 * @return string
+	 */
+	public function GetParserClass () {
+		return $this->parserClass;
+	}
 	
 	/**
 	 * Create number validator instance.
@@ -72,6 +109,9 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 	 * Maximum value for `Number` field(s) in `float` or in `integer`.
 	 * @param  int|float $step
 	 * Step value for `Number` in `float` or in `integer`.
+	 * @param  string    $parserClass
+	 * Float parser class. Parser class has to implement 
+	 * interface `\MvcCore\Ext\Tools\Locales\IFloatParser`;
 	 * 
 	 * @throws \InvalidArgumentException 
 	 * @return void
@@ -80,11 +120,14 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 		array $cfg = [],
 		$min = NULL,
 		$max = NULL,
-		$step = NULL
+		$step = NULL,
+		$parserClass = NULL
 	) {
 		$errorMessages = static::$errorMessages;
 		$this->consolidateCfg($cfg, func_get_args(), func_num_args());
 		parent::__construct($cfg);
+		if ($parserClass !== NULL)
+			$this->SetParserClass($parserClass);
 		if (self::$errorMessages !== $errorMessages)
 			static::$errorMessages = array_replace(
 				self::$errorMessages,
@@ -117,20 +160,7 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 	 * @return int|float|NULL
 	 */
 	protected function parseFloat ($rawSubmittedValue) {
-		$extToolsLocalesFloatParserClass = '\\MvcCore\\Ext\\Tools\\Locales\\FloatParser';
-		if (!class_exists($extToolsLocalesFloatParserClass)) {
-			$this->field->AddValidationError(
-				"MvcCore extension library to parse user input into number "
-				. "is not installed (`mvccore/ext-tool-locale-floatparser`)."
-			);
-			return NULL;
-		}
-		$parser = $extToolsLocalesFloatParserClass::CreateInstance()
-			->SetPreferIntlParsing(FALSE);
-		if ($formLang = $this->form->GetLang()) $parser->SetLang($formLang);
-		if ($formLocale = $this->form->GetLocale()) $parser->SetLocale($formLocale);
-		$result = $parser->Parse($rawSubmittedValue);
-		return $result;
+		return $this->getFloatParser()->Parse($rawSubmittedValue);
 	}
 	
 	/**
@@ -198,6 +228,22 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 				);
 			}
 		}
+	}
+
+	/**
+	 * Return initialized float parser instance.
+	 * @return \MvcCore\Ext\Tools\Locales\FloatParser
+	 */
+	protected function getFloatParser () {
+		if ($this->floatParser === NULL) {
+			$parserClass = $this->parserClass;
+			$this->floatParser = $parserClass::CreateInstance();
+			if ($formLang = $this->form->GetLang()) 
+				$this->floatParser->SetLang($formLang);
+			if ($formLocale = $this->form->GetLocale()) 
+				$this->floatParser->SetLocale($formLocale);
+		}
+		return $this->floatParser;
 	}
 	
 }

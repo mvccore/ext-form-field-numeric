@@ -34,7 +34,7 @@
 		"php": ">=5.4.0",
 		"mvccore/mvccore": "^5.2.28",
 		"mvccore/ext-form": "^5.2.17",
-		"mvccore/ext-tool-locale-floatparser": "^5.1"
+		"mvccore/ext-tool-locale-floatparser": "^5.2"
 	},
 	"suggest": {
 		"mvccore/ext-form-validator-special": "MvcCore form extension with special text and numeric validators."
