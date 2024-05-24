@@ -72,7 +72,22 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 	 * @var \MvcCore\Ext\Tools\Locales\FloatParser|NULL
 	 */
 	protected $floatParser = NULL;
+
+	/**
+	 * PHP runtime precision from `init_get('precision');` or `14` by default.
+	 * @internal
+	 * @var int|NULL
+	 */
+	protected $runtimePrecision = NULL;
+
+	/**
+	 * Field `step` attribute fractions length.
+	 * @internal
+	 * @var int|NULL
+	 */
+	protected $stepFractionsLength = NULL;
 	
+
 	/**
 	 * Set float parser class. Parser class has to implement 
 	 * interface `\MvcCore\Ext\Tools\Locales\IFloatParser`;
@@ -206,28 +221,34 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 	protected function validateStep ($result) {
 		$toolClass = static::$toolClass;
 		if ($this->step !== NULL && !$toolClass::CompareFloats(floatval($this->step), 0.0)) {
-			$floatPrecision = @ini_get('precision');
-			if ($floatPrecision === FALSE) $floatPrecision = 14;
-			list(, $stepFractionsStr) = explode('.', number_format($this->step, $floatPrecision, '.', ''));
-			$stepFractionsStr = rtrim($stepFractionsStr, '0');
-			$stepFractionsLen = strlen($stepFractionsStr);
+			$this->validateInitStepFractionsLength();
 			$dividingResultFloat = floatval($result) / floatval($this->step);
 			$dividingResultRound = round($dividingResultFloat);
-			$relativeEpsilon = floatval('2.220446049250313E-' . ($stepFractionsLen + 1));
+			$relativeEpsilon = floatval('2.220446049250313E-' . ($this->stepFractionsLength + 1));
 			if (abs($dividingResultFloat - $dividingResultRound) <= $relativeEpsilon) {
 				// if number is 123456.9999999999 , turn it into 123457.0
 				// if number is 123456.0000000001 , turn it into 123456.0
 				$dividingResultFloat = $dividingResultRound;
 			}
 			$dividingResultInt = floatval(intval($dividingResultFloat));
-			if (!$toolClass::CompareFloats(
+			$resultIsPossible2DivideByStep = $toolClass::CompareFloats(
 				$dividingResultFloat, $dividingResultInt
-			)) {
+			);
+			if (!$resultIsPossible2DivideByStep) {
 				$this->field->AddValidationError(
 					static::GetErrorMessage(self::ERROR_DIVISIBLE), [$this->step]
 				);
 			}
 		}
+	}
+
+	/**
+	 * Initialize step fractions length in submit validation.
+	 * @return void
+	 */
+	protected function validateInitStepFractionsLength () {
+		$runtimePrecision = $this->getRuntimePrecision();
+		$this->stepFractionsLength = static::getFloatFractionsCount($this->step, $runtimePrecision);
 	}
 
 	/**
@@ -246,4 +267,28 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 		return $this->floatParser;
 	}
 	
+	/**
+	 * Get PHP runtime precision from `init_get('precision');` or `14` by default.
+	 * @return int
+	 */
+	protected function getRuntimePrecision () {
+		if ($this->runtimePrecision === NULL) {
+			$runtimePrecision = @ini_get('precision');
+			if ($runtimePrecision === FALSE) $runtimePrecision = 14;
+			$this->runtimePrecision = $runtimePrecision;
+		}
+		return $this->runtimePrecision;
+	}
+
+	/**
+	 * Get float number fractions count.
+	 * @param  float $floatNumber
+	 * @param  int   $runtimePrecision
+	 * @return int
+	 */
+	protected static function getFloatFractionsCount ($floatNumber, $runtimePrecision) {
+		list(, $stepFractionsStr) = explode('.', number_format($floatNumber, $runtimePrecision, '.', ''));
+		$stepFractionsStr = rtrim($stepFractionsStr, '0');
+		return strlen($stepFractionsStr);
+	}
 }
