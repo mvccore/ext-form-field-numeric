@@ -35,6 +35,7 @@ class FloatNumber extends \MvcCore\Ext\Forms\Validators\Number {
 		self::ERROR_FLOAT	=> "Field '{0}' requires a valid float number (from '{1}' to '{2}').",
 	];
 
+
 	/**
 	 * Validate raw user input. Parse float value if possible by `Intl` extension 
 	 * or try to determinate floating point automatically and return `float` or `NULL`.
@@ -54,7 +55,7 @@ class FloatNumber extends \MvcCore\Ext\Forms\Validators\Number {
 		$this->validateStep($resultFloat);
 		return $result;
 	}
-
+	
 	/**
 	 * Add validation error about invalid float.
 	 * @return void
@@ -67,7 +68,7 @@ class FloatNumber extends \MvcCore\Ext\Forms\Validators\Number {
 			? (defined('PHP_FLOAT_MAX') ? PHP_FLOAT_MAX : floatval('1.79e308'))
 			: (string) $this->max;
 		$this->field->AddValidationError(
-			static::GetErrorMessage(self::ERROR_FLOAT, [$min, $max])
+			static::GetErrorMessage(self::ERROR_FLOAT), [$min, $max]
 		);
 	}
 
