@@ -43,12 +43,19 @@ class FloatNumber extends \MvcCore\Ext\Forms\Validators\Number {
 	 * @return float|NULL   Safe submitted value or `NULL` if not possible to return safe value.
 	 */
 	public function Validate ($rawSubmittedValue) {
-		$rawSubmittedValue = trim((string) $rawSubmittedValue);
-		if (mb_strlen($rawSubmittedValue) === 0) return NULL;
-		$result = $this->parseFloat($rawSubmittedValue);
-		if ($result === NULL) {
-			$this->validateAddErrorNoFloat();
-			return NULL;
+		if (is_float($rawSubmittedValue) || is_int($rawSubmittedValue)) {
+			if (is_nan($rawSubmittedValue))
+				return NULL;
+			$result = $rawSubmittedValue;
+		} else {
+			$rawSubmittedValue = trim((string) $rawSubmittedValue);
+			if (mb_strlen($rawSubmittedValue) === 0) 
+				return NULL;
+			$result = $this->parseFloat($rawSubmittedValue);
+			if ($result === NULL) {
+				$this->validateAddErrorNoFloat();
+				return NULL;
+			}
 		}
 		$resultFloat = floatval($result);
 		$this->validateMinMax($resultFloat);

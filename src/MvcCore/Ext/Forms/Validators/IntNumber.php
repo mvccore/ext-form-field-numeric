@@ -42,12 +42,18 @@ class IntNumber extends \MvcCore\Ext\Forms\Validators\Number {
 	 * @return int|NULL     Safe submitted value or `NULL` if not possible to return safe value.
 	 */
 	public function Validate ($rawSubmittedValue) {
-		$rawSubmittedValue = trim((string) $rawSubmittedValue);
-		if (mb_strlen($rawSubmittedValue) === 0) return NULL;
-		$result = $this->parseFloat($rawSubmittedValue);
-		if ($result === NULL) {
-			$this->validateAddErrorNoInt();
-			return NULL;
+		if (is_int($rawSubmittedValue) || is_float($rawSubmittedValue)) {
+			if (is_nan($rawSubmittedValue))
+				return NULL;
+			$result = floatval($rawSubmittedValue);
+		} else {
+			$rawSubmittedValue = trim((string) $rawSubmittedValue);
+			if (mb_strlen($rawSubmittedValue) === 0) return NULL;
+			$result = $this->parseFloat($rawSubmittedValue);
+			if ($result === NULL) {
+				$this->validateAddErrorNoInt();
+				return NULL;
+			}
 		}
 		if (is_float($result)) {
 			$resultInt = intval(round($result));

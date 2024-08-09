@@ -157,12 +157,19 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 	 * @return int|float|NULL Safe submitted value or `NULL` if not possible to return safe value.
 	 */
 	public function Validate ($rawSubmittedValue) {
-		$rawSubmittedValue = (string) $rawSubmittedValue;
-		if (mb_strlen($rawSubmittedValue) === 0) return NULL;
-		$result = $this->parseFloat($rawSubmittedValue);
-		if ($result === NULL) {
-			$this->validateAddErrorNoNumber();
-			return NULL;
+		if (is_float($rawSubmittedValue) || is_int($rawSubmittedValue)) {
+			if (is_nan($rawSubmittedValue))
+				return NULL;
+			$result = floatval($rawSubmittedValue);
+		} else {
+			$rawSubmittedValue = (string) $rawSubmittedValue;
+			if (mb_strlen($rawSubmittedValue) === 0) 
+				return NULL;
+			$result = $this->parseFloat($rawSubmittedValue);
+			if ($result === NULL) {
+				$this->validateAddErrorNoNumber();
+				return NULL;
+			}
 		}
 		$this->validateMinMax($result);
 		$this->validateStep($result);
@@ -221,6 +228,7 @@ implements	\MvcCore\Ext\Forms\Fields\IMinMaxStepNumbers {
 	protected function validateStep ($result) {
 		$toolClass = static::$toolClass;
 		if ($this->step !== NULL && !$toolClass::CompareFloats(floatval($this->step), 0.0)) {
+			// TODO: this must start from min value!
 			$this->validateInitStepFractionsLength();
 			$dividingResultFloat = floatval($result) / floatval($this->step);
 			$dividingResultRound = round($dividingResultFloat);
